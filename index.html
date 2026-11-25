@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Quiz de révision pour préparer la soutenance de tes projets Epitech.">
+    <title>ReviseTonProjet</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/app.js" defer></script>
+</head>
+<body>
+    <header class="topbar">
+        <a class="brand" href="./">ReviseTonProjet</a>
+        <span class="tagline">Révise ta soutenance, une question à la fois</span>
+    </header>
+
+    <main>
+        <!-- Écran 1 : choix du projet et des réglages -->
+        <section id="screen-home" class="card" aria-labelledby="home-title">
+            <h1 id="home-title">Quel projet veux-tu réviser ?</h1>
+            <p id="load-error" class="alert" role="alert" hidden></p>
+
+            <form id="setup-form">
+                <label for="project-select">Projet</label>
+                <select id="project-select" required></select>
+                <p id="project-description" class="muted"></p>
+
+                <label for="category-select">Thème</label>
+                <select id="category-select"></select>
+
+                <label for="count-select">Nombre de questions</label>
+                <select id="count-select">
+                    <option value="10">10</option>
+                    <option value="20" selected>20</option>
+                    <option value="50">50</option>
+                    <option value="0">Toutes</option>
+                </select>
+
+                <p id="best-score" class="muted" hidden></p>
+                <button type="submit" class="primary" id="start-button" disabled>Commencer</button>
+            </form>
+        </section>
+
+        <!-- Écran 2 : une question -->
+        <section id="screen-quiz" class="card" hidden aria-live="polite">
+            <div class="quiz-head">
+                <span id="progress-text"></span>
+                <span id="score-text"></span>
+            </div>
+            <div class="progress" aria-hidden="true"><div id="progress-bar"></div></div>
+
+            <p class="meta">
+                <span id="question-category" class="pill"></span>
+                <code id="question-file" class="pill file"></code>
+            </p>
+            <h2 id="question-text"></h2>
+
+            <ol id="choices" class="choices"></ol>
+
+            <div id="feedback" class="feedback" hidden>
+                <p id="feedback-verdict" class="verdict"></p>
+                <p id="feedback-explanation"></p>
+            </div>
+
+            <div class="actions">
+                <button type="button" id="quit-button" class="ghost">Arrêter</button>
+                <button type="button" id="next-button" class="primary" hidden>Suivante</button>
+            </div>
+            <p class="hint muted">Raccourcis : touches 1 à 4 pour répondre, Entrée pour continuer.</p>
+        </section>
+
+        <!-- Écran 3 : le résultat -->
+        <section id="screen-result" class="card" hidden aria-labelledby="result-title">
+            <h1 id="result-title">Résultat</h1>
+            <p id="result-score" class="big-score"></p>
+            <p id="result-message"></p>
+
+            <div class="actions">
+                <button type="button" id="retry-wrong-button" class="primary">Revoir mes erreurs</button>
+                <button type="button" id="restart-button">Nouveau quiz</button>
+            </div>
+
+            <h2 id="mistakes-title">À retravailler</h2>
+            <ol id="mistakes" class="mistakes"></ol>
+        </section>
+    </main>
+
+    <footer class="footer muted">
+        Questions écrites à partir du code des projets. Une erreur dans une question ?
+        Corrige-la dans <code>data/</code> et ouvre une pull request.
+    </footer>
+</body>
+</html>

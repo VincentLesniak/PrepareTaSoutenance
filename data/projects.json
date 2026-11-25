@@ -1,0 +1,10 @@
+{
+  "projects": [
+    {
+      "id": "piephp",
+      "title": "PiePHP",
+      "description": "Framework MVC « fait maison » en PHP : front controller, routeur, ORM, entités, moteur de templates et mini-site My cinema.",
+      "file": "data/piephp.json"
+    }
+  ]
+}
