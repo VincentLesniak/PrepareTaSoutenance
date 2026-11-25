@@ -1,0 +1,9 @@
+# Fichiers créés par l'éditeur ou le système
+.idea/
+.vscode/
+*.swp
+.DS_Store
+Thumbs.db
+
+# Dossier préparé par le workflow de déploiement
+/_site/

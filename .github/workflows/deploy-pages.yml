@@ -1,0 +1,71 @@
+# Publie le quiz sur GitHub Pages.
+#
+# Le site est 100 % statique (HTML, CSS, JS, JSON) : GitHub Pages ne sait
+# pas exécuter de PHP, tout le quiz tourne dans le navigateur.
+#
+# - À chaque push et pull request : les questions sont vérifiées.
+# - À chaque push sur la branche 0.1.0 (ou à la main, onglet Actions) :
+#   le site est aussi déployé sur GitHub Pages.
+#
+# Prérequis, une seule fois : Settings → Pages → Source : « GitHub Actions ».
+name: Quiz CI & GitHub Pages
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    name: Vérification des questions
+    runs-on: ubuntu-latest
+    steps:
+      - name: Récupération du code
+        uses: actions/checkout@v5
+
+      - name: Validation des fichiers JSON
+        run: node scripts/validate-questions.mjs
+
+      - name: Syntaxe du JavaScript
+        run: node --check js/app.js
+
+  deploy:
+    name: Déploiement GitHub Pages
+    needs: validate
+    if: github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.ref == 'refs/heads/0.1.0')
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Récupération du code
+        uses: actions/checkout@v5
+
+      # On ne publie que les fichiers du site (pas .github/, scripts/...).
+      - name: Préparation du dossier publié
+        run: |
+          mkdir _site
+          cp -r index.html css js data _site/
+          touch _site/.nojekyll
+
+      - name: Configuration de Pages
+        uses: actions/configure-pages@v5
+
+      - name: Envoi du site
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+      - name: Déploiement
+        id: deployment
+        uses: actions/deploy-pages@v4
