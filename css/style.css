@@ -194,7 +194,7 @@ button.ghost { background: transparent; }
     font-size: 0.85rem;
     overflow-wrap: anywhere;
 }
-textarea, input[type="email"] {
+textarea {
     width: 100%;
     padding: 10px 12px;
     border: 1px solid var(--border);

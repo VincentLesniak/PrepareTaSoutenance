@@ -126,8 +126,7 @@ lesniak.vincent@epitech.eu.
 GitHub Pages ne peut pas envoyer de mail : le formulaire passe par
 [FormSubmit](https://formsubmit.co), un service gratuit et sans compte qui
 transfère chaque message par mail. Le mail reçu contient le sujet, le
-message, l'e-mail de la personne (facultatif, utilisé pour « Répondre ») et,
-pour un signalement, l'identifiant et le texte de la question.
+message et, pour un signalement, l'identifiant et le texte de la question.
 
 Tout se règle dans `data/site.json` :
 

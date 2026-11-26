@@ -428,15 +428,9 @@
         event.preventDefault();
         const form = $('contact-form');
         const message = $('contact-message');
-        const email = $('contact-email');
         if (!message.value.trim()) {
             setContactStatus('bad', 'Écris ton message avant d\'envoyer.');
             message.focus();
-            return;
-        }
-        if (!email.checkValidity()) {
-            setContactStatus('bad', 'Cette adresse e-mail n\'est pas valide.');
-            email.focus();
             return;
         }
         if (!state.contactEndpoint) {
