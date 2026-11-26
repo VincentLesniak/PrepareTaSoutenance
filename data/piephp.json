@@ -10,6 +10,10 @@
       "label": "Le sujet PiePHP"
     },
     {
+      "id": "projet",
+      "label": "Comprendre le projet (dossiers et fichiers)"
+    },
+    {
       "id": "architecture",
       "label": "Architecture & MVC"
     },
@@ -220,6 +224,240 @@
       "explanation": "Article 'has many comments' ET Comment 'has one article' : on peut aller dans les deux sens."
     },
     {
+      "id": "piephp-019",
+      "category": "sujet",
+      "file": "sujet",
+      "question": "Quel est l'objectif de la partie « My cinema by PiePHP » ?",
+      "choices": [
+        "Tester les performances de PiePHP sur une grosse base",
+        "Montrer ce qu'apporte un framework",
+        "Apprendre à écrire des requêtes SQL sans passer par l'ORM",
+        "Remplacer le projet my_cinema par une version plus sécurisée"
+      ],
+      "answer": 1,
+      "explanation": "Les entités User, Film, Genre et Historique se codent vite grâce au Core."
+    },
+    {
+      "id": "piephp-253",
+      "category": "projet",
+      "question": "Quel est le seul fichier PHP que les visiteurs font exécuter directement ?",
+      "choices": [
+        "Core/Core.php, le cœur du framework",
+        "src/routes.php, la liste des routes",
+        "src/View/index.php, le layout",
+        "index.php, à la racine du projet"
+      ],
+      "answer": 3,
+      "explanation": "Le .htaccess renvoie toutes les URL vers index.php : c'est le point d'entrée unique, les autres fichiers sont inclus ensuite."
+    },
+    {
+      "id": "piephp-254",
+      "category": "projet",
+      "question": "Que range-t-on dans le dossier Core/ ?",
+      "choices": [
+        "Les pages, les models et les vues de My cinema",
+        "Les fichiers CSS, JS et les images du site",
+        "Le framework, réutilisable sur un autre site",
+        "La configuration de la base de données"
+      ],
+      "answer": 2,
+      "explanation": "Core/ contient Core, Router, Controller, Entity, ORM, Database, Request et TemplateEngine : rien n'y parle de films ou de genres."
+    },
+    {
+      "id": "piephp-255",
+      "category": "projet",
+      "question": "Que range-t-on dans le dossier src/ ?",
+      "choices": [
+        "Le code propre au site : controllers, models, vues",
+        "Les classes du framework, communes à tous les sites",
+        "Les fichiers publics : CSS, JS et images",
+        "Les vues compilées par le moteur de templates"
+      ],
+      "answer": 0,
+      "explanation": "src/ contient Controller/, Model/, View/ et routes.php : tout ce qui est spécifique à My cinema."
+    },
+    {
+      "id": "piephp-256",
+      "category": "projet",
+      "file": "webroot/",
+      "question": "À quoi sert le dossier webroot/ ?",
+      "choices": [
+        "Ranger les vues PHP de chaque controller du site",
+        "Ranger les classes du framework PiePHP",
+        "Ranger les fichiers publics (CSS, JS, images)",
+        "Ranger la configuration du serveur Apache"
+      ],
+      "answer": 2,
+      "explanation": "C'est le seul dossier dont les fichiers sont servis tels quels par Apache, grâce à la liste blanche du .htaccess."
+    },
+    {
+      "id": "piephp-257",
+      "category": "projet",
+      "file": "src/View/",
+      "question": "Où se trouvent les vues de UserController ?",
+      "choices": [
+        "Dans src/View/User/",
+        "Dans src/Controller/User/",
+        "Dans Core/View/User/",
+        "Dans webroot/User/"
+      ],
+      "answer": 0,
+      "explanation": "render() retire « Controller » du nom de la classe : UserController cherche ses vues dans le dossier User."
+    },
+    {
+      "id": "piephp-258",
+      "category": "projet",
+      "file": "src/View/index.php",
+      "question": "Qu'est-ce que le fichier src/View/index.php ?",
+      "choices": [
+        "Le layout commun à toutes les pages",
+        "La page d'accueil du site My cinema",
+        "Le point d'entrée qui lance le framework",
+        "La vue de la liste des utilisateurs"
+      ],
+      "answer": 0,
+      "explanation": "Le layout contient <html>, <head>, le menu et le pied de page ; chaque vue est insérée dedans. La page d'accueil, elle, est src/View/App/index.php."
+    },
+    {
+      "id": "piephp-259",
+      "category": "projet",
+      "file": "src/routes.php",
+      "question": "Que contient le fichier src/routes.php ?",
+      "choices": [
+        "La liste des controllers à charger au démarrage",
+        "Les adresses des fichiers CSS et JavaScript",
+        "Les routes déclarées avec Router::connect()",
+        "Les identifiants de connexion à la base"
+      ],
+      "answer": 2,
+      "explanation": "Chaque ligne associe une URL à un controller et une action, par exemple '/inscription' vers UserController::registerAction()."
+    },
+    {
+      "id": "piephp-260",
+      "category": "projet",
+      "file": "config.json",
+      "question": "Quel fichier contient les réglages de connexion à la base ?",
+      "choices": [
+        "src/routes.php",
+        "Core/Database.php",
+        "database.sql",
+        "config.json"
+      ],
+      "answer": 3,
+      "explanation": "Database lit config.local.json s'il existe (réglages propres à ta machine), sinon config.json."
+    },
+    {
+      "id": "piephp-261",
+      "category": "projet",
+      "file": "database.sql",
+      "question": "À quoi sert le fichier database.sql ?",
+      "choices": [
+        "Garder une copie de sauvegarde automatique de la base",
+        "Créer les tables et des données de départ",
+        "Déclarer les relations entre les models du site",
+        "Configurer la connexion PDO du projet"
+      ],
+      "answer": 1,
+      "explanation": "On l'importe une fois dans MySQL : il crée users, genres, films et historiques."
+    },
+    {
+      "id": "piephp-262",
+      "category": "projet",
+      "file": "src/Model/",
+      "question": "Quel namespace ont les models de My cinema ?",
+      "choices": [
+        "Core, par exemple Core\\FilmModel",
+        "Src, par exemple Src\\FilmModel",
+        "Aucun, la classe s'appelle FilmModel",
+        "Model, par exemple Model\\FilmModel"
+      ],
+      "answer": 3,
+      "explanation": "Le namespace suit le dossier : l'autoloader trouve ensuite le fichier tout seul."
+    },
+    {
+      "id": "piephp-263",
+      "category": "projet",
+      "file": "src/Controller/",
+      "question": "Quel nom complet le Core construit-il pour l'URL /genre/index ?",
+      "choices": [
+        "Controller\\GenreController",
+        "Model\\GenreModel",
+        "Core\\Controller\\GenreController",
+        "GenreController\\indexAction"
+      ],
+      "answer": 0,
+      "explanation": "Core::run() fait 'Controller\\\\' . ucfirst('genre') . 'Controller', puis appelle indexAction()."
+    },
+    {
+      "id": "piephp-264",
+      "category": "projet",
+      "file": "src/Model/GenreModel.php",
+      "question": "Quelle table correspond à GenreModel ?",
+      "choices": [
+        "genre",
+        "genre_model",
+        "GenreModel",
+        "genres"
+      ],
+      "answer": 3,
+      "explanation": "getTable() retire « Model », met en minuscules et ajoute un « s » : Genre → genres."
+    },
+    {
+      "id": "piephp-265",
+      "category": "projet",
+      "question": "Que contient la table historiques ?",
+      "choices": [
+        "Les anciennes versions de chaque film modifié",
+        "Les connexions et déconnexions des membres",
+        "Les films vus par chaque membre, avec la date",
+        "Les erreurs rencontrées par le site"
+      ],
+      "answer": 2,
+      "explanation": "Chaque ligne relie un user_id à un film_id, avec vu_le : c'est l'historique de visionnage."
+    },
+    {
+      "id": "piephp-266",
+      "category": "projet",
+      "file": "src/Controller/AppController.php",
+      "question": "Que fait la page d'accueil (AppController::indexAction()) ?",
+      "choices": [
+        "Elle affiche le formulaire de connexion",
+        "Elle liste les films par titre",
+        "Elle redirige vers la page de profil",
+        "Elle affiche la liste des membres"
+      ],
+      "answer": 1,
+      "explanation": "Elle appelle find(['ORDER BY' => 'titre ASC']) sur FilmModel, puis render('index')."
+    },
+    {
+      "id": "piephp-267",
+      "category": "projet",
+      "file": "src/View/User/login.php",
+      "question": "Où se trouve le formulaire de connexion ?",
+      "choices": [
+        "src/View/User/login.php",
+        "src/Controller/UserController.php",
+        "src/View/index.php",
+        "webroot/login.html"
+      ],
+      "answer": 0,
+      "explanation": "Un formulaire, c'est du HTML : il est dans une vue. UserController::loginAction() l'affiche et traite son envoi."
+    },
+    {
+      "id": "piephp-268",
+      "category": "projet",
+      "file": "src/Controller/",
+      "question": "Que faut-il créer pour une nouvelle page /contact sans toucher aux routes ?",
+      "choices": [
+        "Un fichier contact.php à la racine du projet, à côté d'index.php",
+        "Une méthode contact() dans la classe Core",
+        "Une règle /contact dans le fichier .htaccess",
+        "ContactController avec indexAction() et sa vue"
+      ],
+      "answer": 3,
+      "explanation": "Le routage automatique traduit /contact en ContactController::indexAction(), qui affiche src/View/Contact/index.php."
+    },
+    {
       "id": "piephp-022",
       "category": "architecture",
       "file": "README.md",
@@ -346,6 +584,339 @@
       "explanation": "Le controller manipule des objets, l'ORM écrit le SQL, PDO parle à la base."
     },
     {
+      "id": "piephp-269",
+      "category": "architecture",
+      "file": "src/Controller/",
+      "question": "De quelle classe héritent tous les controllers du site ?",
+      "choices": [
+        "Core\\Core",
+        "Core\\Entity",
+        "Core\\Request\\Controller",
+        "Core\\Controller"
+      ],
+      "answer": 3,
+      "explanation": "« extends Controller » leur donne render(), redirect(), flash(), requireLogin()... sans les réécrire."
+    },
+    {
+      "id": "piephp-270",
+      "category": "architecture",
+      "file": "src/Model/",
+      "question": "De quelle classe héritent tous les models du site ?",
+      "choices": [
+        "Core\\Entity",
+        "Core\\ORM",
+        "Core\\Database",
+        "Core\\Controller"
+      ],
+      "answer": 0,
+      "explanation": "Entity apporte save(), delete(), find(), readAll()... ; le model n'écrit que ce qui lui est propre."
+    },
+    {
+      "id": "piephp-271",
+      "category": "architecture",
+      "file": "Core/ORM.php",
+      "question": "Qui écrit et exécute les requêtes SQL ?",
+      "choices": [
+        "Le controller, avec des requêtes écrites",
+        "La vue, juste avant d'afficher",
+        "Le Router, selon l'URL demandée",
+        "L'ORM, à partir des tableaux PHP"
+      ],
+      "answer": 3,
+      "explanation": "Les models passent par l'ORM, qui construit le SQL et l'exécute avec PDO."
+    },
+    {
+      "id": "piephp-272",
+      "category": "architecture",
+      "file": "Core/Database.php",
+      "question": "Qui ouvre la connexion PDO à la base ?",
+      "choices": [
+        "Core\\ORM",
+        "index.php",
+        "Core\\Database",
+        "Core\\Core"
+      ],
+      "answer": 2,
+      "explanation": "Database::getConnection() lit la configuration et crée l'objet PDO ; l'ORM ne fait que l'utiliser."
+    },
+    {
+      "id": "piephp-273",
+      "category": "architecture",
+      "file": "Core/Database.php",
+      "question": "Quand la connexion à la base est-elle ouverte ?",
+      "choices": [
+        "Dès index.php, à chaque visite du site",
+        "Au premier besoin, puis réutilisée",
+        "À chaque requête SQL, puis refermée",
+        "Une seule fois, au démarrage d'Apache"
+      ],
+      "answer": 1,
+      "explanation": "getConnection() crée l'objet PDO seulement s'il n'existe pas encore : une page 404 n'ouvre jamais de connexion."
+    },
+    {
+      "id": "piephp-274",
+      "category": "architecture",
+      "question": "Dans quel ordre une page de film est-elle construite ?",
+      "choices": [
+        "Vue → Controller → Model → ORM → PDO",
+        "Model → Controller → Vue → ORM → PDO",
+        "Controller → Model → ORM → PDO, puis vue",
+        "ORM → Model → Vue → Controller → PDO"
+      ],
+      "answer": 2,
+      "explanation": "L'action demande le film au model, qui passe par l'ORM et PDO ; avec les données, l'action appelle render()."
+    },
+    {
+      "id": "piephp-275",
+      "category": "architecture",
+      "file": "src/View/",
+      "question": "Une vue peut-elle lire la base de données elle-même ?",
+      "choices": [
+        "Oui, avec $this->orm dans le fichier de vue",
+        "Oui, en appelant directement PDO",
+        "Non, elle affiche ce qu'on lui donne",
+        "Non, seul le Router y a accès"
+      ],
+      "answer": 2,
+      "explanation": "C'est la séparation MVC : la vue ne fait que de l'affichage, les données arrivent par render()."
+    },
+    {
+      "id": "piephp-276",
+      "category": "architecture",
+      "file": "Core/Controller.php",
+      "question": "Qui décide quelle vue afficher ?",
+      "choices": [
+        "L'action du controller, avec render()",
+        "Le Router, dans le fichier routes.php",
+        "Le model, à la fin de save()",
+        "Le layout, d'après l'URL demandée"
+      ],
+      "answer": 0,
+      "explanation": "render('show') dans FilmController affiche src/View/Film/show.php."
+    },
+    {
+      "id": "piephp-277",
+      "category": "architecture",
+      "file": "src/Model/FilmModel.php",
+      "question": "Où est écrite la règle « le titre d'un film est obligatoire » ?",
+      "choices": [
+        "Dans FilmModel::validate()",
+        "Dans la vue Film/form.php, avec required",
+        "Dans routes.php",
+        "Dans Core/Request.php"
+      ],
+      "answer": 0,
+      "explanation": "Les règles sur les données appartiennent au model ; le controller appelle validate() avant save()."
+    },
+    {
+      "id": "piephp-278",
+      "category": "architecture",
+      "file": "Core/Request.php",
+      "question": "Comment un controller lit-il les champs d'un formulaire ?",
+      "choices": [
+        "Avec l'ORM, qui lit le formulaire envoyé",
+        "Avec le Router, qui garde le POST",
+        "Avec $this->request",
+        "Avec la vue, qui renvoie les champs"
+      ],
+      "answer": 2,
+      "explanation": "Le constructeur de Controller crée un objet Request qui nettoie $_GET et $_POST."
+    },
+    {
+      "id": "piephp-279",
+      "category": "architecture",
+      "file": "Core/Controller.php",
+      "question": "Comment un controller transmet-il des variables à la vue ?",
+      "choices": [
+        "Dans le 2e argument de render()",
+        "Avec des variables globales $GLOBALS",
+        "En les rangeant dans $_SESSION",
+        "En les déclarant dans routes.php"
+      ],
+      "answer": 0,
+      "explanation": "render('show', ['film' => $film]) crée la variable $film dans la vue."
+    },
+    {
+      "id": "piephp-280",
+      "category": "architecture",
+      "file": "src/Model/",
+      "question": "Où mettre le code qui cherche les films d'un genre ?",
+      "choices": [
+        "Dans un model, via l'ORM",
+        "Dans la vue qui affiche le genre",
+        "Dans le fichier routes.php",
+        "Dans le layout src/View/index.php"
+      ],
+      "answer": 0,
+      "explanation": "Tout accès aux données passe par les models : la vue ne reçoit que le résultat."
+    },
+    {
+      "id": "piephp-281",
+      "category": "architecture",
+      "file": "src/View/",
+      "question": "Où mettre le HTML d'un nouveau formulaire ?",
+      "choices": [
+        "Dans le controller, avec des echo",
+        "Dans le model de la table",
+        "Dans Core/Controller.php",
+        "Dans une vue de src/View/"
+      ],
+      "answer": 3,
+      "explanation": "Le controller prépare les données, la vue contient le HTML."
+    },
+    {
+      "id": "piephp-282",
+      "category": "architecture",
+      "file": "Core/Controller.php",
+      "question": "Pourquoi les controllers héritent-ils tous de Core\\Controller ?",
+      "choices": [
+        "Pour partager render(), redirect()...",
+        "Parce que PHP refuse une classe sans parent",
+        "Pour être chargés sans passer par l'autoloader",
+        "Pour pouvoir se passer d'un namespace"
+      ],
+      "answer": 0,
+      "explanation": "L'héritage factorise le code commun : on l'écrit une fois dans la classe mère."
+    },
+    {
+      "id": "piephp-283",
+      "category": "architecture",
+      "file": "Core/Entity.php",
+      "question": "Quelle est la différence entre Entity et FilmModel ?",
+      "choices": [
+        "Entity est générique, FilmModel précise",
+        "FilmModel est générique, Entity décrit les films",
+        "Entity parle à la base, FilmModel jamais",
+        "Aucune : FilmModel n'est qu'un alias d'Entity"
+      ],
+      "answer": 0,
+      "explanation": "Entity contient le comportement commun ; FilmModel ajoute ses colonnes, sa relation et validate()."
+    },
+    {
+      "id": "piephp-284",
+      "category": "architecture",
+      "file": "Core/Router.php",
+      "question": "À quoi sert Router::connect() ?",
+      "choices": [
+        "Ouvrir la connexion à la base de données du site",
+        "Rediriger le visiteur vers une autre page",
+        "Charger le fichier d'un controller",
+        "Relier une URL à un controller et une action"
+      ],
+      "answer": 3,
+      "explanation": "Router::connect('/inscription', ['controller' => 'user', 'action' => 'register'])."
+    },
+    {
+      "id": "piephp-285",
+      "category": "architecture",
+      "file": "Core/Core.php",
+      "question": "Qu'est-ce qu'une « action » dans PiePHP ?",
+      "choices": [
+        "Une méthode d'un controller appelée par une URL",
+        "Une route déclarée dans le fichier routes.php",
+        "Un formulaire HTML envoyé en POST",
+        "Une requête SQL préparée par l'ORM"
+      ],
+      "answer": 0,
+      "explanation": "/film/show appelle FilmController::showAction() : chaque page correspond à une action."
+    },
+    {
+      "id": "piephp-286",
+      "category": "architecture",
+      "file": "Core/Controller.php",
+      "question": "Comment le controller sait-il dans quel dossier chercher sa vue ?",
+      "choices": [
+        "D'après l'URL tapée par le visiteur",
+        "D'après la route de routes.php",
+        "D'après le nom de la table liée",
+        "D'après son propre nom de classe"
+      ],
+      "answer": 3,
+      "explanation": "get_class($this) donne Controller\\FilmController ; render() en tire « Film »."
+    },
+    {
+      "id": "piephp-287",
+      "category": "architecture",
+      "file": "Core/Controller.php",
+      "question": "Qui appelle __destruct() sur le controller ?",
+      "choices": [
+        "Core::run(), juste à la dernière ligne",
+        "Le Router, après avoir trouvé la route",
+        "PHP, quand l'objet n'est plus utilisé",
+        "La vue, à la fin de son affichage"
+      ],
+      "answer": 2,
+      "explanation": "À la fin de Core::run(), la variable $controller disparaît : PHP appelle alors le destructeur, qui affiche la page."
+    },
+    {
+      "id": "piephp-288",
+      "category": "architecture",
+      "file": "Core/Controller.php",
+      "question": "Une action se termine sans appeler render() ni redirect(). Que voit le visiteur ?",
+      "choices": [
+        "Une page blanche",
+        "Le layout, sans contenu",
+        "Une erreur 404",
+        "La page d'accueil"
+      ],
+      "answer": 0,
+      "explanation": "__destruct() n'affiche que ce que render() a préparé : sans render(), rien n'est envoyé."
+    },
+    {
+      "id": "piephp-289",
+      "category": "architecture",
+      "file": "Core/autoload.php",
+      "question": "Pourquoi FilmController n'écrit-il aucun require pour FilmModel ?",
+      "choices": [
+        "index.php inclut tous les models au départ",
+        "L'autoloader charge FilmModel au premier new",
+        "Core::run() charge tous les models",
+        "PHP charge les classes du même dossier"
+      ],
+      "answer": 1,
+      "explanation": "Au premier new FilmModel(), PHP appelle l'autoloader, qui trouve src/Model/FilmModel.php."
+    },
+    {
+      "id": "piephp-290",
+      "category": "architecture",
+      "question": "Pourquoi tout le site passe-t-il par un seul fichier d'entrée ?",
+      "choices": [
+        "Parce qu'Apache n'exécute qu'un seul fichier PHP",
+        "Pour que chaque requête suive le même traitement",
+        "Pour réduire la mémoire utilisée par le serveur",
+        "Parce que les namespaces l'exigent en PHP"
+      ],
+      "answer": 1,
+      "explanation": "Routage, sessions, chargement des classes : tout est fait une fois, au même endroit."
+    },
+    {
+      "id": "piephp-291",
+      "category": "architecture",
+      "question": "Quel est l'intérêt du MVC quand on travaille à plusieurs ?",
+      "choices": [
+        "Chacun modifie sa couche sans casser le reste",
+        "Le site s'exécute beaucoup plus vite qu'avant",
+        "On n'a plus besoin de base de données",
+        "On écrit moins de HTML dans les vues"
+      ],
+      "answer": 0,
+      "explanation": "Changer le design (vues) ne touche pas aux requêtes (models), et inversement."
+    },
+    {
+      "id": "piephp-292",
+      "category": "architecture",
+      "file": "Core/ORM.php",
+      "question": "Qu'apporte l'ORM par rapport à PDO seul ?",
+      "choices": [
+        "Il se connecte lui-même au serveur MySQL",
+        "Il garde les données en mémoire du serveur",
+        "Il remplace la base de données du projet",
+        "Il écrit le SQL à partir de tableaux PHP"
+      ],
+      "answer": 3,
+      "explanation": "PDO exécute du SQL ; l'ORM le fabrique pour nous (INSERT, SELECT, UPDATE, DELETE) à partir des tableaux."
+    },
+    {
       "id": "piephp-031",
       "category": "requete",
       "file": "index.php",
@@ -456,6 +1027,102 @@
       ],
       "answer": 0,
       "explanation": "Deux captures avec ob_start() : d'abord la vue, puis le layout qui reçoit $view."
+    },
+    {
+      "id": "piephp-293",
+      "category": "requete",
+      "question": "Quelle est la toute première étape quand un visiteur ouvre /film/show?id=3 ?",
+      "choices": [
+        "Core::run() lit l'URL demandée",
+        "Le Router cherche la route",
+        "Apache applique le .htaccess",
+        "FilmController est créé"
+      ],
+      "answer": 2,
+      "explanation": "Avant tout PHP, Apache lit le .htaccess, qui envoie la requête vers index.php."
+    },
+    {
+      "id": "piephp-294",
+      "category": "requete",
+      "file": "index.php",
+      "question": "Que fait index.php, dans l'ordre ?",
+      "choices": [
+        "Inclut l'autoloader, lit config.json, affiche la vue",
+        "Calcule BASE_URI, inclut l'autoloader, lance Core",
+        "Crée le controller, appelle l'action, ferme la base",
+        "Lit les routes, crée la base, inclut le layout"
+      ],
+      "answer": 1,
+      "explanation": "Son rôle est minuscule : préparer l'environnement puis donner la main à Core\\Core::run()."
+    },
+    {
+      "id": "piephp-295",
+      "category": "requete",
+      "file": "Core/Core.php",
+      "question": "Que vérifie Core::run() avant de créer le controller ?",
+      "choices": [
+        "Que la classe et l'action existent",
+        "Que la base de données répond bien",
+        "Que le visiteur est bien connecté au site",
+        "Que le fichier de vue existe déjà"
+      ],
+      "answer": 0,
+      "explanation": "class_exists() et method_exists() : sinon, c'est la page 404 et aucun controller n'est créé."
+    },
+    {
+      "id": "piephp-296",
+      "category": "requete",
+      "file": "Core/Core.php",
+      "question": "Où est appelée l'action, par exemple showAction() ?",
+      "choices": [
+        "Dans le Router, avec Router::get()",
+        "Dans index.php, après new Core()",
+        "Dans le constructeur du controller",
+        "Dans Core::run()"
+      ],
+      "answer": 3,
+      "explanation": "Le nom de la méthode est dans une variable : PHP appelle la méthode qui porte ce nom."
+    },
+    {
+      "id": "piephp-297",
+      "category": "requete",
+      "file": "Core/Core.php",
+      "question": "L'URL /film/inconnue est demandée. Que se passe-t-il ?",
+      "choices": [
+        "Une erreur PHP fatale s'affiche à l'écran",
+        "La page 404 : l'action n'existe pas",
+        "La page d'accueil s'affiche à la place",
+        "FilmController::indexAction() est appelée"
+      ],
+      "answer": 1,
+      "explanation": "method_exists() échoue : Core::notFound() envoie le code 404 et la vue Error/404.php."
+    },
+    {
+      "id": "piephp-298",
+      "category": "requete",
+      "question": "Après un ajout de film réussi, qui demande au navigateur de changer de page ?",
+      "choices": [
+        "La vue, avec un lien sur lequel cliquer",
+        "Le Router, avec une nouvelle route",
+        "L'ORM, après l'INSERT réussi",
+        "redirect(), avec l'en-tête Location"
+      ],
+      "answer": 3,
+      "explanation": "L'action appelle $this->redirect('/film/show?id=...') ; __destruct() envoie l'en-tête Location (303)."
+    },
+    {
+      "id": "piephp-299",
+      "category": "requete",
+      "file": "src/View/index.php",
+      "question": "Comment le contenu d'une vue arrive-t-il dans le layout ?",
+      "choices": [
+        "Le layout inclut lui-même le fichier de la vue",
+        "La vue inclut le layout à la fin du fichier",
+        "Le Router colle les deux fichiers ensemble",
+        "Dans la variable $view, affichée par le layout"
+      ],
+      "answer": 3,
+      "explanation": "render() capture d'abord la vue, puis donne ce HTML au layout dans $view."
     },
     {
       "id": "piephp-040",
@@ -1018,6 +1685,20 @@
       "explanation": "Les controllers lisent $this->request->getPost('email') au lieu de $_POST."
     },
     {
+      "id": "piephp-107",
+      "category": "request",
+      "file": "Core/Request.php",
+      "question": "Où l'objet Request est-il créé ?",
+      "choices": [
+        "Dans index.php, avant Core::run()",
+        "Dans le constructeur de Core\\Controller, la classe mère de tous les controllers",
+        "Dans Core::run(), juste avant d'appeler l'action",
+        "Dans Core::run(), avant l'action"
+      ],
+      "answer": 1,
+      "explanation": "Le sujet le veut dans tous les controllers : la classe mère suffit."
+    },
+    {
       "id": "piephp-108",
       "category": "request",
       "file": "Core/Request.php",
@@ -1044,6 +1725,20 @@
       ],
       "answer": 0,
       "explanation": "Elle protège l'affichage HTML, pas la base de données."
+    },
+    {
+      "id": "piephp-110",
+      "category": "request",
+      "file": "Core/Request.php",
+      "question": "Que fait isPost() ?",
+      "choices": [
+        "Envoie le formulaire en POST",
+        "Dit si la méthode HTTP est POST",
+        "Vérifie que $_POST n'est pas vide",
+        "Dit si $_POST n'est pas vide"
+      ],
+      "answer": 1,
+      "explanation": "Une même action affiche le formulaire en GET et le traite en POST."
     },
     {
       "id": "piephp-113",
@@ -1550,6 +2245,20 @@
       "explanation": "Un attribut private n'est visible que dans sa propre classe, pas dans la classe mère."
     },
     {
+      "id": "piephp-177",
+      "category": "models",
+      "file": "src/Model/GenreModel.php",
+      "question": "Quelle relation déclare GenreModel ?",
+      "choices": [
+        "'has many genres'",
+        "'has one film'",
+        "'has one genre'",
+        "'has many films'"
+      ],
+      "answer": 3,
+      "explanation": "Elle sert à refuser la suppression d'un genre qui contient encore des films."
+    },
+    {
       "id": "piephp-183",
       "category": "controllers",
       "file": "src/Controller/UserController.php",
@@ -1562,6 +2271,20 @@
       ],
       "answer": 1,
       "explanation": "Les autres controllers le relisent avec currentUserId()."
+    },
+    {
+      "id": "piephp-185",
+      "category": "controllers",
+      "file": "src/Controller/UserController.php",
+      "question": "Comment logoutAction() déconnecte-t-elle le membre ?",
+      "choices": [
+        "$_SESSION = [] puis session_destroy()",
+        "session_regenerate_id(true) seulement",
+        "setcookie('PHPSESSID', '') seulement",
+        "unset($_SESSION['user_id']) seulement"
+      ],
+      "answer": 0,
+      "explanation": "On vide pour la requête en cours, puis on supprime la session côté serveur."
     },
     {
       "id": "piephp-186",
@@ -1590,6 +2313,20 @@
       ],
       "answer": 2,
       "explanation": "render() y insère la vue dans la variable $view."
+    },
+    {
+      "id": "piephp-192",
+      "category": "vues",
+      "file": "src/View/index.php",
+      "question": "Que signifie <?= $x ?> ?",
+      "choices": [
+        "<?php isset($x); ?>",
+        "<?php $x = true; ?>",
+        "<?php return $x; ?>",
+        "<?php echo $x; ?>"
+      ],
+      "answer": 3,
+      "explanation": "C'est la balise d'affichage courte."
     },
     {
       "id": "piephp-197",
@@ -1912,6 +2649,90 @@
       ],
       "answer": 1,
       "explanation": "include, lui, ne fait qu'un warning si le fichier manque."
+    },
+    {
+      "id": "piephp-300",
+      "category": "syntaxe",
+      "file": "Core/Entity.php",
+      "question": "Pourquoi ne peut-on pas faire new Entity() ?",
+      "choices": [
+        "Entity n'a aucun constructeur défini",
+        "Entity est abstraite",
+        "Entity est privée au namespace Core",
+        "Entity est une interface, pas une classe"
+      ],
+      "answer": 1,
+      "explanation": "abstract class Entity : on fait new FilmModel(), qui hérite d'Entity."
+    },
+    {
+      "id": "piephp-301",
+      "category": "syntaxe",
+      "file": "src/Model/FilmModel.php",
+      "question": "FilmModel redéfinit delete() puis appelle parent::delete(). Pourquoi ?",
+      "choices": [
+        "Pour ajouter un traitement avant celui d'Entity",
+        "Pour remplacer complètement la suppression d'Entity",
+        "Parce que PHP oblige à appeler le parent",
+        "Pour supprimer la table films en entier"
+      ],
+      "answer": 0,
+      "explanation": "FilmModel supprime d'abord l'historique du film, puis laisse Entity supprimer la ligne."
+    },
+    {
+      "id": "piephp-302",
+      "category": "syntaxe",
+      "file": "Core/Entity.php",
+      "question": "Que veut dire « FilmModel extends Entity » ?",
+      "choices": [
+        "FilmModel copie le contenu du fichier Entity.php",
+        "Entity hérite des méthodes de FilmModel",
+        "FilmModel hérite du code d'Entity",
+        "FilmModel et Entity partagent la même table"
+      ],
+      "answer": 2,
+      "explanation": "C'est l'héritage : un FilmModel est aussi une Entity, avec quelques ajouts."
+    },
+    {
+      "id": "piephp-303",
+      "category": "syntaxe",
+      "file": "Core/Controller.php",
+      "question": "Que désigne $this dans une méthode de FilmController ?",
+      "choices": [
+        "L'objet FilmController en cours",
+        "La classe Core\\Controller elle-même",
+        "Le fichier FilmController.php sur le disque",
+        "La dernière vue affichée"
+      ],
+      "answer": 0,
+      "explanation": "$this est l'objet sur lequel la méthode est appelée ; il donne accès à $this->request, $this->render()..."
+    },
+    {
+      "id": "piephp-304",
+      "category": "syntaxe",
+      "file": "Core/Controller.php",
+      "question": "Pourquoi render() est-elle protected ?",
+      "choices": [
+        "Pour qu'elle soit plus rapide à exécuter par PHP",
+        "Seuls les controllers enfants l'utilisent",
+        "Pour que les vues puissent l'appeler",
+        "Parce qu'une méthode publique est interdite"
+      ],
+      "answer": 1,
+      "explanation": "protected : utilisable dans Controller et ses classes filles, jamais depuis l'extérieur de la classe."
+    },
+    {
+      "id": "piephp-305",
+      "category": "syntaxe",
+      "file": "Core/Router.php",
+      "question": "Pourquoi écrit-on Router::connect() et pas $router->connect() ?",
+      "choices": [
+        "Router est abstraite, on ne peut pas la créer",
+        "Les deux écritures font exactement pareil",
+        "connect() est statique : pas besoin d'objet",
+        "$router est réservé aux tests unitaires"
+      ],
+      "answer": 2,
+      "explanation": "Une méthode static s'appelle sur la classe ; les routes sont gardées dans une propriété static partagée."
     }
   ]
 }
