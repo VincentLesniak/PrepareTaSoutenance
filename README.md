@@ -10,7 +10,7 @@ Projets disponibles :
 
 | Projet | Questions | Thèmes | Source |
 |--------|-----------|--------|--------|
-| PiePHP | 129 | 25 (le sujet, le rôle de chaque fichier du Core et de src/, le cheminement d'une requête, .htaccess, PDO et SQL, routes dynamiques, ORM et relations, POO, sécurité, « trouve le bug »...) | [Claude_Test](https://github.com/VincentLesniak/Claude_Test) et le sujet |
+| PiePHP | 174 | 26 (le projet dossier par dossier, le sujet, le rôle de chaque fichier du Core et de src/, le cheminement d'une requête, .htaccess, PDO et SQL, routes dynamiques, ORM et relations, POO, sécurité, « trouve le bug »...) | [Claude_Test](https://github.com/VincentLesniak/Claude_Test) et le sujet |
 
 ## La stack
 
@@ -31,7 +31,7 @@ PrepareTaSoutenance/
 ├── data/
 │   ├── projects.json           La liste des projets à réviser
 │   ├── site.json               Les réglages du site (formulaire de contact)
-│   └── piephp.json             Les 129 questions de PiePHP
+│   └── piephp.json             Les 174 questions de PiePHP
 ├── scripts/
 │   └── validate-questions.mjs  Vérifie les fichiers de questions
 └── .github/workflows/
