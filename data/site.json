@@ -1,7 +1,6 @@
 {
   "contact": {
-    "endpoint": "",
-    "fallbackUrl": "https://github.com/VincentLesniak",
+    "issuesUrl": "https://github.com/VincentLesniak/PrepareTaSoutenance/issues/new",
     "rateLimit": {
       "minSecondsBetweenMessages": 120,
       "maxMessagesPerDay": 5

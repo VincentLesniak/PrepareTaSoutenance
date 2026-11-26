@@ -30,7 +30,7 @@ PrepareTaSoutenance/
 ├── js/app.js                   La logique du quiz
 ├── data/
 │   ├── projects.json           La liste des projets à réviser
-│   ├── site.json               Les réglages du site (formulaire de contact)
+│   ├── site.json               Les réglages du site (signalements)
 │   └── piephp.json             Les 252 questions de PiePHP
 ├── scripts/
 │   └── validate-questions.mjs  Vérifie les fichiers de questions
@@ -117,52 +117,37 @@ Le quiz ne connaît aucun projet à l'avance : tout est dans `data/`.
 
 Astuce : `https://<site>/#monprojet` ouvre directement le quiz sur ce projet.
 
-## Formulaire de contact
+## Signaler une erreur
 
 Le bouton « Écris-moi » du pied de page et le lien « Signaler une erreur sur
-cette question » ouvrent un formulaire qui envoie un mail à l'auteur.
+cette question » ouvrent un petit formulaire (sujet et message). En
+validant, le site ouvre dans un nouvel onglet une **issue GitHub
+pré-remplie** sur ce dépôt : la personne relit et clique sur « Create ».
+Pour un signalement, le titre et le texte contiennent l'identifiant, le
+fichier et l'énoncé de la question.
 
-GitHub Pages ne peut pas envoyer de mail : le formulaire passe par
-[FormSubmit](https://formsubmit.co), un service gratuit et sans compte qui
-transfère chaque message par mail. Le mail reçu contient le sujet, le
-message et, pour un signalement, l'identifiant et le texte de la question.
+Pourquoi une issue plutôt qu'un mail ? GitHub Pages ne peut pas envoyer de
+mail, et les services d'envoi de mail se font souvent bloquer par les
+messageries d'école. Avec une issue : aucun service tiers, aucune adresse
+mail dans le code, les signalements sont suivis sur GitHub, et tu reçois
+une notification comme pour toute issue. Il faut en revanche un compte
+GitHub pour signaler.
 
-Tout se règle dans `data/site.json` :
+**Limite d'envoi.** Le navigateur accepte au plus un signalement toutes les
+2 minutes et 5 sur 24 heures. Elle évite les envois en rafale depuis le site
+mais reste contournable (vider le stockage du navigateur) ; GitHub applique
+en plus ses propres protections anti-spam.
+
+Réglages dans `data/site.json` :
 
 ```json
 {
   "contact": {
-    "endpoint": "https://formsubmit.co/ajax/<alias>",
-    "fallbackUrl": "https://github.com/VincentLesniak",
+    "issuesUrl": "https://github.com/VincentLesniak/PrepareTaSoutenance/issues/new",
     "rateLimit": { "minSecondsBetweenMessages": 120, "maxMessagesPerDay": 5 }
   }
 }
 ```
-
-**Ne jamais mettre l'adresse mail en clair dans `endpoint`** : le dépôt et le
-site sont publics, elle serait lisible par tous, robots compris. On utilise
-l'alias aléatoire que FormSubmit fournit à l'activation :
-
-1. Depuis un terminal, envoie un premier message à FormSubmit avec ton
-   adresse (une seule fois, hors du dépôt) :
-
-   ```bash
-   curl -X POST https://formsubmit.co/ajax/ton.adresse@exemple.fr -d message=activation
-   ```
-
-2. Ouvre le mail « Activate Form » reçu, clique sur le lien d'activation et
-   note l'alias aléatoire qu'il indique.
-3. Mets `https://formsubmit.co/ajax/<alias>` dans `endpoint`.
-
-Tant que `endpoint` est vide, le formulaire s'affiche mais indique que l'envoi
-n'est pas configuré et renvoie vers `fallbackUrl`.
-
-**Limite d'envoi.** Le navigateur accepte au plus un message toutes les
-2 minutes et 5 messages sur 24 heures. Cette limite arrête les envois en
-rafale depuis le site, mais elle est contournable (vider le stockage du
-navigateur, envoyer sans passer par le site) : GitHub Pages ne peut pas en
-faire une côté serveur. Un champ caché (`_honey`) écarte en plus les robots
-qui remplissent tous les champs, et FormSubmit a son propre filtre anti-spam.
 
 ## Déploiement sur GitHub Pages
 

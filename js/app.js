@@ -4,7 +4,7 @@
  * Données :
  *   data/projects.json      la liste des projets (id, titre, fichier) ;
  *   data/<projet>.json      les catégories et les questions d'un projet ;
- *   data/site.json          les réglages du site (adresse du formulaire de contact).
+ *   data/site.json          les réglages du site (formulaire de signalement).
  * Ajouter un projet = ajouter son fichier JSON et une ligne dans
  * projects.json, sans toucher à ce code.
  *
@@ -24,9 +24,9 @@
         score: 0,
         answered: false,
         mistakes: [],
-        contactEndpoint: '',
-        contactFallback: '',
+        issuesUrl: 'https://github.com/VincentLesniak/PrepareTaSoutenance/issues/new',
         rateLimit: { minSecondsBetweenMessages: 120, maxMessagesPerDay: 5 },
+        reportedQuestion: null,
     };
 
     const $ = (id) => document.getElementById(id);
@@ -316,25 +316,26 @@
         show('result');
     }
 
-    // ------------------------------------------------------------------ contact
+    // ------------------------------------------------------------------ signalement
 
-    // Le site est statique : il ne peut pas envoyer de mail lui-même. Le
-    // formulaire est envoyé à FormSubmit, qui transfère le message par mail.
-    // L'adresse et les limites d'envoi sont dans data/site.json.
+    // Le site est statique : il ne peut ni envoyer de mail ni écrire sur
+    // GitHub lui-même. Le formulaire prépare donc une issue GitHub (titre et
+    // texte pré-remplis) et l'ouvre dans un nouvel onglet : la personne n'a
+    // plus qu'à la valider avec son compte GitHub. Réglages : data/site.json.
     async function loadSiteSettings() {
         try {
             const site = await fetchJson('data/site.json');
             const contact = site.contact || {};
-            state.contactEndpoint = contact.endpoint || '';
-            state.contactFallback = contact.fallbackUrl || '';
+            if (contact.issuesUrl) {
+                state.issuesUrl = contact.issuesUrl;
+            }
             Object.assign(state.rateLimit, contact.rateLimit || {});
-        } catch (e) { /* pas de réglages : le formulaire affichera une solution de repli */ }
+        } catch (e) { /* pas de réglages : on garde les valeurs par défaut */ }
     }
 
-    // Limite d'envoi, dans le navigateur : au plus un message toutes les
-    // N secondes et M messages sur 24 heures. Elle évite les envois en rafale
-    // depuis le site, mais ne remplace pas une protection côté serveur (on
-    // peut la contourner en vidant le stockage du navigateur).
+    // Limite d'envoi, dans le navigateur : au plus un signalement toutes les
+    // N secondes et M sur 24 heures. Elle évite les envois en rafale depuis le
+    // site ; GitHub applique en plus ses propres protections anti-spam.
     const SENT_KEY = 'pts-contact-sent';
     const DAY_MS = 24 * 60 * 60 * 1000;
 
@@ -359,12 +360,12 @@
         const { minSecondsBetweenMessages, maxMessagesPerDay } = state.rateLimit;
         if (sends.length >= maxMessagesPerDay) {
             const wait = Math.min(...sends) + DAY_MS - now;
-            return `Tu as déjà envoyé ${maxMessagesPerDay} messages aujourd'hui. Réessaie dans ${formatWait(wait)}.`;
+            return `Tu as déjà fait ${maxMessagesPerDay} signalements aujourd'hui. Réessaie dans ${formatWait(wait)}.`;
         }
         const last = sends.length ? Math.max(...sends) : 0;
         const wait = last + minSecondsBetweenMessages * 1000 - now;
         if (wait > 0) {
-            return `Un message vient de partir. Attends ${formatWait(wait)} avant d'en envoyer un autre.`;
+            return `Un signalement vient de partir. Attends ${formatWait(wait)} avant d'en faire un autre.`;
         }
         return null;
     }
@@ -383,10 +384,8 @@
     }
 
     function openContact(question) {
-        const form = $('contact-form');
-        form.reset();
+        $('contact-form').reset();
         setContactStatus('', '');
-        $('contact-submit').disabled = false;
         $('contact-submit').hidden = false;
         $('contact-cancel').textContent = 'Annuler';
         const limited = rateLimitMessage(Date.now());
@@ -394,14 +393,12 @@
             setContactStatus('bad', limited);
         }
 
+        state.reportedQuestion = question || null;
         const info = $('contact-question-info');
         if (question) {
-            const label = `${state.project.title} · ${question.id} : ${question.question}`;
-            $('contact-question').value = label;
-            info.textContent = `Question concernée : ${label}`;
+            info.textContent = `Question concernée : ${state.project.title} · ${question.id} : ${question.question}`;
             $('contact-subject').value = 'Erreur dans une question';
         } else {
-            $('contact-question').value = '';
             info.textContent = '';
         }
         info.hidden = !question;
@@ -424,55 +421,66 @@
         }
     }
 
-    async function sendContact(event) {
+    // Construit l'adresse de la nouvelle issue, avec titre et texte pré-remplis.
+    function buildIssueUrl() {
+        const subject = $('contact-subject').value;
+        const message = $('contact-message').value.trim();
+        const q = state.reportedQuestion;
+        const title = q ? `${subject} : ${q.id}` : subject;
+        const lines = [];
+        if (q) {
+            lines.push(`**Projet :** ${state.project.title}`);
+            lines.push(`**Question :** ${q.id} (${q.file || state.categoryLabels[q.category] || q.category})`);
+            lines.push(`> ${q.question}`);
+            lines.push('');
+        }
+        lines.push(message);
+        lines.push('');
+        lines.push('---');
+        lines.push('_Envoyé depuis le formulaire de PrepareTaSoutenance._');
+        const params = new URLSearchParams({ title, body: lines.join('\n') });
+        return `${state.issuesUrl}?${params.toString()}`;
+    }
+
+    function sendContact(event) {
         event.preventDefault();
-        const form = $('contact-form');
         const message = $('contact-message');
         if (!message.value.trim()) {
             setContactStatus('bad', 'Écris ton message avant d\'envoyer.');
             message.focus();
             return;
         }
-        if (!state.contactEndpoint) {
-            setContactStatus('bad', 'L\'envoi n\'est pas encore configuré. '
-                + (state.contactFallback ? `Écris-moi sur ${state.contactFallback}` : ''));
-            return;
-        }
-
         const limited = rateLimitMessage(Date.now());
         if (limited) {
             setContactStatus('bad', limited);
             return;
         }
 
-        const data = new FormData(form);
-        data.append('_subject', `[PrepareTaSoutenance] ${data.get('sujet')}`);
-        data.append('_template', 'table');
-        data.append('_captcha', 'false');
-        data.append('page', window.location.href);
-
-        const submit = $('contact-submit');
-        submit.disabled = true;
-        setContactStatus('', 'Envoi en cours…');
-        try {
-            const response = await fetch(state.contactEndpoint, {
-                method: 'POST',
-                body: data,
-                headers: { Accept: 'application/json' },
-            });
-            const result = await response.json().catch(() => ({}));
-            // FormSubmit répond { success: "true" } (une chaîne) quand le mail part.
-            if (!response.ok || String(result.success) !== 'true') {
-                throw new Error(result.message || `HTTP ${response.status}`);
-            }
-            rememberSend(Date.now());
-            setContactStatus('good', 'Merci, ton message est envoyé !');
-            submit.hidden = true;
-            $('contact-cancel').textContent = 'Fermer';
-        } catch (e) {
-            submit.disabled = false;
-            setContactStatus('bad', 'L\'envoi a échoué. Vérifie ta connexion et réessaie dans un moment.');
+        const url = buildIssueUrl();
+        // Sans « noopener » dans les options : avec, window.open renvoie
+        // toujours null et on croirait l'ouverture bloquée. On coupe le lien
+        // avec la page ensuite.
+        const tab = window.open(url, '_blank');
+        if (tab) {
+            tab.opener = null;
         }
+        rememberSend(Date.now());
+        const status = $('contact-status');
+        status.className = 'status good';
+        status.hidden = false;
+        status.textContent = 'Une page GitHub s\'est ouverte avec ton message. Vérifie-le puis clique sur « Create » pour l\'envoyer. ';
+        if (!tab) {
+            // Ouverture bloquée par le navigateur : on donne le lien.
+            const link = document.createElement('a');
+            link.href = url;
+            link.target = '_blank';
+            link.rel = 'noopener';
+            link.textContent = 'Ouvrir la page GitHub';
+            status.textContent = 'Ton navigateur a bloqué l\'ouverture. ';
+            status.append(link, ' puis clique sur « Create » pour envoyer.');
+        }
+        $('contact-submit').hidden = true;
+        $('contact-cancel').textContent = 'Fermer';
     }
 
     // ------------------------------------------------------------------ événements

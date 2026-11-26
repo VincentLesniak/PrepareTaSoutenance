@@ -205,10 +205,10 @@ textarea {
 }
 textarea { resize: vertical; min-height: 110px; }
 textarea:focus-visible, input:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
-.honeypot { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
 .status { margin: 16px 0 0; padding: 10px 12px; border-radius: 8px; }
 .status.good { color: var(--good); background: var(--good-bg); }
 .status.bad { color: var(--bad); background: var(--bad-bg); }
+.status a { color: inherit; font-weight: 600; }
 
 @media (max-width: 480px) {
     .card { padding: 16px; }
