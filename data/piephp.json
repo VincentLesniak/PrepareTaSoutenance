@@ -570,6 +570,48 @@
       "explanation": "Seuls webroot/, index.php et robots.txt sont servis directement."
     },
     {
+      "id": "piephp-055",
+      "category": "htaccess",
+      "file": ".htaccess",
+      "question": "Quel module Apache faut-il activer pour ce .htaccess ?",
+      "choices": [
+        "mod_security",
+        "mod_alias",
+        "mod_headers",
+        "mod_rewrite"
+      ],
+      "answer": 3,
+      "explanation": "sudo a2enmod rewrite, et AllowOverride All dans le VirtualHost."
+    },
+    {
+      "id": "piephp-056",
+      "category": "htaccess",
+      "file": ".htaccess",
+      "question": "Quelle directive du VirtualHost doit autoriser les fichiers .htaccess ?",
+      "choices": [
+        "Require all granted",
+        "DirectoryIndex index.php",
+        "Options +Indexes",
+        "AllowOverride All"
+      ],
+      "answer": 3,
+      "explanation": "Sans elle, Apache ignore complètement le .htaccess."
+    },
+    {
+      "id": "piephp-057",
+      "category": "htaccess",
+      "file": ".htaccess",
+      "question": "À quoi sert RewriteBase /PiePHP/ ?",
+      "choices": [
+        "À choisir la page affichée par défaut",
+        "À indiquer le dossier des vues du projet",
+        "À définir la valeur de la constante BASE_URI",
+        "À indiquer le chemin du projet dans l'URL"
+      ],
+      "answer": 3,
+      "explanation": "Il faut l'adapter si le projet n'est pas dans /PiePHP/."
+    },
+    {
       "id": "piephp-058",
       "category": "htaccess",
       "file": ".htaccess",
@@ -582,6 +624,62 @@
       ],
       "answer": 0,
       "explanation": "-f teste l'existence d'un fichier, ! inverse le test."
+    },
+    {
+      "id": "piephp-059",
+      "category": "htaccess",
+      "file": ".htaccess",
+      "question": "Que fait le flag [OR] entre les deux RewriteCond ?",
+      "choices": [
+        "Il les relie par un OU au lieu d'un ET",
+        "Il ignore la condition si elle échoue",
+        "Il arrête la lecture des conditions suivantes",
+        "Il rend la condition insensible à la casse"
+      ],
+      "answer": 0,
+      "explanation": "On réécrit si le fichier n'existe pas OU s'il n'est pas dans la liste blanche."
+    },
+    {
+      "id": "piephp-060",
+      "category": "htaccess",
+      "file": ".htaccess",
+      "question": "Que fait le flag QSA de la RewriteRule ?",
+      "choices": [
+        "Il envoie un code de redirection 301 au navigateur",
+        "Il met l'URL réécrite en minuscules",
+        "Il garde la query string (?a=1)",
+        "Il envoie un code de redirection 301"
+      ],
+      "answer": 2,
+      "explanation": "Query String Append : sans lui, $_GET serait vide après réécriture."
+    },
+    {
+      "id": "piephp-061",
+      "category": "htaccess",
+      "file": ".htaccess",
+      "question": "Que fait le flag L de la RewriteRule ?",
+      "choices": [
+        "Il arrête les règles suivantes",
+        "Il écrit chaque réécriture dans le journal d'Apache",
+        "Il écrit la réécriture dans le journal",
+        "Il limite la taille de l'URL acceptée"
+      ],
+      "answer": 0,
+      "explanation": "L comme Last."
+    },
+    {
+      "id": "piephp-062",
+      "category": "htaccess",
+      "file": ".htaccess",
+      "question": "Pourquoi la liste blanche contient webroot/.+ et pas webroot/ ?",
+      "choices": [
+        "Pour accepter les noms de fichiers en majuscules",
+        "Pour refuser « webroot/ » seul, qui listerait le dossier",
+        "Pour autoriser aussi les fichiers cachés de webroot",
+        "Pour autoriser les fichiers cachés comme webroot/.htaccess"
+      ],
+      "answer": 1,
+      "explanation": "« .+ » exige au moins un caractère après webroot/."
     },
     {
       "id": "piephp-064",
@@ -1004,6 +1102,48 @@
       "explanation": "Seul le DSN change. Les tests en profitent avec SQLite en mémoire."
     },
     {
+      "id": "piephp-117",
+      "category": "database",
+      "file": "Core/Database.php",
+      "question": "Qu'est-ce que le DSN ?",
+      "choices": [
+        "Le nom de l'utilisateur de la base",
+        "Le fichier qui contient la config",
+        "La chaîne qui dit à PDO où se connecter",
+        "Le nom du serveur web qui héberge le site"
+      ],
+      "answer": 2,
+      "explanation": "Ex. mysql:host=localhost;port=3306;dbname=piephp;charset=utf8mb4."
+    },
+    {
+      "id": "piephp-118",
+      "category": "database",
+      "file": "Core/Database.php",
+      "question": "Que fait PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION ?",
+      "choices": [
+        "Une erreur SQL est écrite dans un journal",
+        "Une erreur SQL lance une PDOException",
+        "Une erreur SQL est affichée dans la page",
+        "Une erreur SQL renvoie false en silence"
+      ],
+      "answer": 1,
+      "explanation": "Impossible de rater une requête qui échoue."
+    },
+    {
+      "id": "piephp-119",
+      "category": "database",
+      "file": "Core/Database.php",
+      "question": "Pourquoi régler PDO::ATTR_EMULATE_PREPARES à false ?",
+      "choices": [
+        "Pour garder les requêtes en cache côté PHP",
+        "Pour pouvoir utiliser la même config avec SQLite",
+        "Pour de vraies requêtes préparées côté MySQL",
+        "Pour accélérer les requêtes en les simulant"
+      ],
+      "answer": 2,
+      "explanation": "Sinon PHP simule la préparation en collant lui-même les valeurs."
+    },
+    {
       "id": "piephp-121",
       "category": "database",
       "file": ".gitignore",
@@ -1016,6 +1156,20 @@
       ],
       "answer": 0,
       "explanation": "Le .htaccess protège du navigateur, pas de Git."
+    },
+    {
+      "id": "piephp-124",
+      "category": "database",
+      "file": "Core/Database.php",
+      "question": "Que signifie charset=utf8mb4 dans le DSN ?",
+      "choices": [
+        "Un encodage limité aux accents français",
+        "Le vrai UTF-8 de MySQL, emojis compris",
+        "Une compression des textes sur 4 octets",
+        "Un chiffrement des colonnes de texte"
+      ],
+      "answer": 1,
+      "explanation": "L'« utf8 » historique de MySQL ne stocke pas tous les caractères."
     },
     {
       "id": "piephp-125",
@@ -1436,6 +1590,90 @@
       ],
       "answer": 2,
       "explanation": "render() y insère la vue dans la variable $view."
+    },
+    {
+      "id": "piephp-197",
+      "category": "sql",
+      "file": "database.sql",
+      "question": "Dans quel ordre créer les tables genres, films et historiques ?",
+      "choices": [
+        "films, historiques, genres",
+        "historiques, films, genres",
+        "genres, films, historiques",
+        "films, genres, historiques"
+      ],
+      "answer": 2,
+      "explanation": "Une table avec une clé étrangère se crée après la table qu'elle désigne."
+    },
+    {
+      "id": "piephp-198",
+      "category": "sql",
+      "file": "database.sql",
+      "question": "Que fait ON DELETE CASCADE sur historiques.film_id ?",
+      "choices": [
+        "Supprime l'utilisateur lié",
+        "Empêche de supprimer un film qui a un historique",
+        "Interdit de supprimer le film",
+        "Quand le film est supprimé, ses lignes d'historique sont supprimées avec lui"
+      ],
+      "answer": 3,
+      "explanation": "Une sécurité de plus, au niveau de la base."
+    },
+    {
+      "id": "piephp-199",
+      "category": "sql",
+      "file": "database.sql",
+      "question": "Que fait INSERT IGNORE ?",
+      "choices": [
+        "Insère seulement si la table est vide",
+        "Insère sans vérifier les types des colonnes",
+        "Ignore les clés étrangères de la table",
+        "Saute les doublons"
+      ],
+      "answer": 3,
+      "explanation": "Utile pour réimporter le fichier sans erreur."
+    },
+    {
+      "id": "piephp-200",
+      "category": "sql",
+      "file": "database.sql",
+      "question": "Pourquoi utiliser CREATE TABLE IF NOT EXISTS ?",
+      "choices": [
+        "Pour remplacer la table par la nouvelle",
+        "Pour réimporter sans erreur",
+        "Pour remplacer les tables existantes par les nouvelles",
+        "Pour créer la base si elle n'existe pas"
+      ],
+      "answer": 1,
+      "explanation": "Les tables existantes et leurs données sont gardées."
+    },
+    {
+      "id": "piephp-201",
+      "category": "sql",
+      "file": "database.sql",
+      "question": "Que signifie AUTO_INCREMENT sur la colonne id ?",
+      "choices": [
+        "L'id est recalculé après une suppression",
+        "L'id est tiré au hasard sans doublon",
+        "La base numérote les lignes toute seule",
+        "L'id augmente à chaque modification"
+      ],
+      "answer": 2,
+      "explanation": "C'est pour ça que create() renvoie lastInsertId()."
+    },
+    {
+      "id": "piephp-202",
+      "category": "sql",
+      "file": "database.sql",
+      "question": "Pourquoi films.genre_id peut-il être NULL ?",
+      "choices": [
+        "Un film peut ne pas avoir de genre",
+        "Pour accélérer les jointures",
+        "Pour supprimer le film avec le genre",
+        "Une clé étrangère est toujours NULL"
+      ],
+      "answer": 0,
+      "explanation": "La vue affiche alors « Aucun genre »."
     },
     {
       "id": "piephp-203",
