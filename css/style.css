@@ -161,9 +161,8 @@ button.ghost { background: transparent; }
     padding: 0;
     border: 0;
     background: none;
-    color: var(--accent);
+    color: inherit;
     font: inherit;
-    font-weight: 600;
     text-decoration: underline;
     text-underline-offset: 2px;
     cursor: pointer;

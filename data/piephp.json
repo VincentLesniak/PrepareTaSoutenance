@@ -102,29 +102,11 @@
       "label": "Comparaison avec les vrais frameworks"
     },
     {
-      "id": "tests",
-      "label": "Tests, CI & versions"
-    },
-    {
       "id": "syntaxe",
       "label": "Syntaxe PHP"
     }
   ],
   "questions": [
-    {
-      "id": "piephp-001",
-      "category": "sujet",
-      "file": "sujet",
-      "question": "Sur quels frameworks le sujet dit-il que PiePHP est basé ?",
-      "choices": [
-        "La structure de Symfony et la norme de CakePHP",
-        "La structure de Laravel et la norme de CakePHP",
-        "La structure de CakePHP et la norme de Symfony",
-        "La structure de Symfony et la norme de Laravel"
-      ],
-      "answer": 2,
-      "explanation": "Le sujet présente PiePHP comme une préparation aux projets suivants sur CakePHP, Laravel et Symfony."
-    },
     {
       "id": "piephp-002",
       "category": "sujet",
@@ -138,76 +120,6 @@
       ],
       "answer": 3,
       "explanation": "Exemple : grâce à Entity, un model n'écrit plus son CRUD, il en hérite."
-    },
-    {
-      "id": "piephp-003",
-      "category": "sujet",
-      "file": "sujet",
-      "question": "Pourquoi le sujet insiste-t-il autant sur la norme PSR-12 pour ce projet ?",
-      "choices": [
-        "PHP 8 refuse d'exécuter un code qui ne la respecte pas",
-        "D'autres développeurs vont utiliser le framework",
-        "Elle est obligatoire pour utiliser spl_autoload_register",
-        "Apache ne charge pas les fichiers qui ne la respectent pas"
-      ],
-      "answer": 1,
-      "explanation": "Un code normé et documenté est plus facile à comprendre et à réutiliser."
-    },
-    {
-      "id": "piephp-004",
-      "category": "sujet",
-      "file": "sujet",
-      "question": "Dans la première étape, où le formulaire de src/View/User/login.php envoie-t-il ses données ?",
-      "choices": [
-        "En POST, vers /Core/Core.php",
-        "En POST, vers /src/Controller/UserController.php",
-        "En POST, vers /index.php",
-        "En GET, vers /index.php"
-      ],
-      "answer": 2,
-      "explanation": "Les champs email et password arrivent alors dans $_POST, affiché par index.php pour déboguer."
-    },
-    {
-      "id": "piephp-005",
-      "category": "sujet",
-      "file": "sujet",
-      "question": "Pourquoi le sujet fait-il afficher $_POST, $_GET et $_SERVER dans une balise <pre> ?",
-      "choices": [
-        "Pour que la page reste valide W3C malgré l'affichage",
-        "Pour garder la mise en forme et lire les tableaux",
-        "Pour empêcher l'exécution du code HTML contenu dans les tableaux",
-        "Pour masquer les données sensibles de $_SERVER"
-      ],
-      "answer": 1,
-      "explanation": "print_r() produit des retours à la ligne et des espaces que le HTML ignorerait sans <pre>."
-    },
-    {
-      "id": "piephp-006",
-      "category": "sujet",
-      "file": "sujet",
-      "question": "Que contient la superglobale $_SERVER ?",
-      "choices": [
-        "Les constantes définies avec define() dans index.php",
-        "Les variables d'environnement et les cookies du navigateur uniquement",
-        "Les informations sur le serveur web et sur la requête HTTP en cours",
-        "Les variables enregistrées dans la session du visiteur"
-      ],
-      "answer": 2,
-      "explanation": "On y trouve REQUEST_URI, REQUEST_METHOD, DOCUMENT_ROOT..."
-    },
-    {
-      "id": "piephp-007",
-      "category": "sujet",
-      "file": "sujet",
-      "question": "Que doit afficher la page quand l'autoloader de l'étape « Lancement » fonctionne ?",
-      "choices": [
-        "Class 'Core\\Core' loaded",
-        "Core [OK]",
-        "Autoload OK",
-        "Core\\Core [OK] (le nom complet de la classe)"
-      ],
-      "answer": 3,
-      "explanation": "Le run() du sujet fait echo __CLASS__ . \" [OK]\" ; __CLASS__ vaut le nom complet de la classe."
     },
     {
       "id": "piephp-008",
@@ -252,20 +164,6 @@
       "explanation": "D'où l'attribut privé statique $relations des models."
     },
     {
-      "id": "piephp-011",
-      "category": "sujet",
-      "file": "sujet",
-      "question": "Que sont les « migrations » évoquées par le sujet ?",
-      "choices": [
-        "Des classes qui convertissent un model en tableau JSON",
-        "Des fichiers qui décrivent et font évoluer la base",
-        "Des scripts qui copient la base de production vers le développement",
-        "Des fichiers qui déplacent un projet d'un serveur à un autre"
-      ],
-      "answer": 1,
-      "explanation": "Optionnelles dans PiePHP (database.sql joue ce rôle à la main), courantes dans Laravel ou Symfony."
-    },
-    {
       "id": "piephp-012",
       "category": "sujet",
       "file": "sujet",
@@ -278,20 +176,6 @@
       ],
       "answer": 3,
       "explanation": "Attention à ne pas confondre avec la classe Entity, qui représente une ligne de table."
-    },
-    {
-      "id": "piephp-013",
-      "category": "sujet",
-      "file": "sujet",
-      "question": "Le sujet demande une méthode read_all() dans le model. Pourquoi le projet l'appelle-t-il readAll() ?",
-      "choices": [
-        "PDO possède déjà une méthode read_all()",
-        "L'autoloader ne trouve pas les noms avec _",
-        "PSR-1 impose le camelCase",
-        "Les noms avec _ sont réservés aux fonctions globales de PHP"
-      ],
-      "answer": 2,
-      "explanation": "Les noms de méthodes s'écrivent en camelCase : readAll, readByEmail, getConnection..."
     },
     {
       "id": "piephp-014",
@@ -322,20 +206,6 @@
       "explanation": "Une entité sans id n'a pas encore de ligne en base : save() fera un INSERT."
     },
     {
-      "id": "piephp-016",
-      "category": "sujet",
-      "file": "sujet",
-      "question": "Pourquoi le sujet n'aborde-t-il pas la relation 1:1 ?",
-      "choices": [
-        "Elle se ramène fonctionnellement à une relation 1:N",
-        "MySQL ne sait pas représenter une relation 1:1",
-        "Elle demande obligatoirement une table pivot",
-        "PHP ne permet pas deux objets liés l'un à l'autre"
-      ],
-      "answer": 0,
-      "explanation": "Un 1:1 est un 1:N où le N vaut toujours 1."
-    },
-    {
       "id": "piephp-017",
       "category": "sujet",
       "file": "sujet",
@@ -348,62 +218,6 @@
       ],
       "answer": 0,
       "explanation": "Article 'has many comments' ET Comment 'has one article' : on peut aller dans les deux sens."
-    },
-    {
-      "id": "piephp-018",
-      "category": "sujet",
-      "file": "sujet",
-      "question": "Que peut contenir une table pivot, en plus des deux clés étrangères ?",
-      "choices": [
-        "Rien d'autre, sinon la relation ne marche plus",
-        "Des informations sur le lien lui-même, par exemple la date de l'ajout",
-        "Une copie des colonnes des deux tables liées",
-        "Une copie complète des colonnes des deux tables qu'elle relie"
-      ],
-      "answer": 1,
-      "explanation": "Le sujet cite l'exemple d'une date ajoutée à la table articles_tags."
-    },
-    {
-      "id": "piephp-019",
-      "category": "sujet",
-      "file": "sujet",
-      "question": "Quel est l'objectif de la partie « My cinema by PiePHP » ?",
-      "choices": [
-        "Tester les performances de PiePHP sur une grosse base",
-        "Montrer ce qu'apporte un framework",
-        "Apprendre à écrire des requêtes SQL sans passer par l'ORM",
-        "Remplacer le projet my_cinema par une version plus sécurisée"
-      ],
-      "answer": 1,
-      "explanation": "Les entités User, Film, Genre et Historique se codent vite grâce au Core."
-    },
-    {
-      "id": "piephp-020",
-      "category": "sujet",
-      "file": "sujet",
-      "question": "Quelle relation le sujet demande-t-il pour l'entité Historique ?",
-      "choices": [
-        "Film 'has many users' à travers la table historiques",
-        "Historique 'has many films' et Film 'has many historiques'",
-        "User 'has one historique' et Historique 'has many films'",
-        "User 'has many historiques' et Historique 'has one film'"
-      ],
-      "answer": 3,
-      "explanation": "Une ligne d'historique = un utilisateur a vu un film."
-    },
-    {
-      "id": "piephp-021",
-      "category": "sujet",
-      "file": "sujet",
-      "question": "Que signifie LAMP, la configuration visée par le sujet ?",
-      "choices": [
-        "Linux, Apache, MySQL, PHP",
-        "Local Apache MySQL Project",
-        "Linux, Apache, MariaDB, Python",
-        "Laravel, Apache, MySQL, PHP"
-      ],
-      "answer": 0,
-      "explanation": "Sous Windows, XAMPP fournit l'équivalent."
     },
     {
       "id": "piephp-022",
@@ -630,20 +444,6 @@
       "explanation": "C'est le principe Post / Redirect / Get : un F5 ne renverra pas le formulaire."
     },
     {
-      "id": "piephp-038",
-      "category": "requete",
-      "file": "Core/Core.php",
-      "question": "Que contient $url au début de run() pour /PiePHP/user/add?x=1 ?",
-      "choices": [
-        "/user/add?x=1",
-        "/PiePHP/user/add",
-        "user/add",
-        "/user/add"
-      ],
-      "answer": 3,
-      "explanation": "getUrl() enlève la query string, puis le préfixe BASE_URI."
-    },
-    {
       "id": "piephp-039",
       "category": "requete",
       "file": "Core/Controller.php",
@@ -700,62 +500,6 @@
       "explanation": "La session est la mémoire du serveur entre deux requêtes."
     },
     {
-      "id": "piephp-043",
-      "category": "http",
-      "file": "src/Controller/UserController.php",
-      "question": "Où sont stockées les données de $_SESSION ?",
-      "choices": [
-        "Dans le localStorage du navigateur",
-        "Dans la table users de la base",
-        "Sur le serveur, retrouvées grâce à un cookie",
-        "Dans un cookie du navigateur, en clair"
-      ],
-      "answer": 2,
-      "explanation": "Le cookie PHPSESSID permet à PHP de retrouver le bon fichier de session."
-    },
-    {
-      "id": "piephp-044",
-      "category": "http",
-      "file": "Core/Controller.php",
-      "question": "Sans tampon de sortie (output_buffering à 0), que se passe-t-il si on appelle header() après un echo ?",
-      "choices": [
-        "PHP met le texte en attente et envoie l'en-tête",
-        "Fatal error et la page s'arrête aussitôt",
-        "L'en-tête n'est pas envoyé (« headers already sent »)",
-        "L'en-tête est envoyé et le texte est ignoré"
-      ],
-      "answer": 2,
-      "explanation": "C'est pour ça que render() n'affiche rien avant la fin."
-    },
-    {
-      "id": "piephp-045",
-      "category": "http",
-      "file": "Core/Core.php",
-      "question": "Que signifie le code HTTP 404 ?",
-      "choices": [
-        "La ressource demandée n'existe pas",
-        "L'accès à la ressource est interdit",
-        "La ressource a été déplacée",
-        "Le serveur a rencontré une erreur"
-      ],
-      "answer": 0,
-      "explanation": "500 = erreur serveur, 403 = interdit, 301/303 = redirection."
-    },
-    {
-      "id": "piephp-046",
-      "category": "http",
-      "file": "Core/Controller.php",
-      "question": "Quelle est la différence entre une redirection 301 et 303 ?",
-      "choices": [
-        "301 est temporaire ; 303 est mise en cache pour toujours",
-        "301 garde la méthode POST ; 303 la transforme en PUT",
-        "301 est envoyée par Apache ; 303 seulement par PHP",
-        "301 est définitive ; 303 fait charger la page en GET"
-      ],
-      "answer": 3,
-      "explanation": "Après un formulaire, on utilise 303 : « va voir là-bas, en GET »."
-    },
-    {
       "id": "piephp-047",
       "category": "http",
       "file": "src/View/User/login.php",
@@ -784,20 +528,6 @@
       "explanation": "Elle sert à retirer '/PiePHP' de l'URL demandée et à préfixer les liens des vues."
     },
     {
-      "id": "piephp-049",
-      "category": "index",
-      "file": "index.php",
-      "question": "Comment BASE_URI est-elle calculée dans index.php ?",
-      "choices": [
-        "En retirant DOCUMENT_ROOT du début de __DIR__",
-        "REQUEST_URI privé de la query string et du nom de fichier",
-        "dirname(__FILE__) privé du nom de domaine du serveur",
-        "La clé base_uri lue dans le fichier config.json"
-      ],
-      "answer": 0,
-      "explanation": "/var/www/html/PiePHP moins /var/www/html donne /PiePHP."
-    },
-    {
       "id": "piephp-050",
       "category": "index",
       "file": "index.php",
@@ -824,34 +554,6 @@
       ],
       "answer": 3,
       "explanation": "C'est l'erreur que le sujet demande de constater avant d'écrire l'autoloader."
-    },
-    {
-      "id": "piephp-052",
-      "category": "index",
-      "file": "index.php",
-      "question": "Pourquoi utiliser implode(DIRECTORY_SEPARATOR, ['Core', 'autoload.php']) ?",
-      "choices": [
-        "Pour que le chemin reste valide si on renomme le dossier",
-        "Pour éviter qu'un visiteur ne modifie le chemin inclus",
-        "Pour inclure tous les fichiers du dossier Core d'un coup",
-        "Pour le bon séparateur sous Linux et Windows"
-      ],
-      "answer": 3,
-      "explanation": "'/' sous Linux, '\\' sous Windows."
-    },
-    {
-      "id": "piephp-053",
-      "category": "index",
-      "file": "index.php",
-      "question": "Que vaut la constante magique __DIR__ ?",
-      "choices": [
-        "Le dossier depuis lequel la commande php a été lancée",
-        "Le dossier du fichier où elle est écrite",
-        "Le dossier depuis lequel PHP a été lancé",
-        "Le chemin complet du fichier courant"
-      ],
-      "answer": 1,
-      "explanation": "__FILE__ donnerait le chemin du fichier lui-même."
     },
     {
       "id": "piephp-054",
@@ -980,20 +682,6 @@
       "explanation": "« .+ » exige au moins un caractère après webroot/."
     },
     {
-      "id": "piephp-063",
-      "category": "htaccess",
-      "file": ".htaccess",
-      "question": "À quoi sert le fichier robots.txt ?",
-      "choices": [
-        "À lister les routes publiques de l'application",
-        "À configurer les règles de réécriture d'Apache",
-        "À donner des consignes aux robots d'indexation",
-        "À bloquer l'accès au site pour les robots malveillants"
-      ],
-      "answer": 2,
-      "explanation": "Le sujet demande de savoir expliquer son utilité en soutenance. Ce n'est pas une protection : un robot malveillant l'ignore."
-    },
-    {
       "id": "piephp-064",
       "category": "autoload",
       "file": "Core/autoload.php",
@@ -1022,20 +710,6 @@
       "explanation": "new, appel statique, extends, class_exists()... déclenchent le chargement."
     },
     {
-      "id": "piephp-066",
-      "category": "autoload",
-      "file": "Core/autoload.php",
-      "question": "Quel argument PHP passe-t-il à la fonction d'autoload ?",
-      "choices": [
-        "Le chemin du fichier qui contient la classe à charger",
-        "Le nom complet de la classe, avec son namespace",
-        "Le nom court de la classe, sans namespace",
-        "Le chemin du fichier qui contient la classe"
-      ],
-      "answer": 1,
-      "explanation": "Par exemple 'Core\\Core' : à l'autoloader d'en déduire le fichier."
-    },
-    {
       "id": "piephp-067",
       "category": "autoload",
       "file": "Core/autoload.php",
@@ -1048,34 +722,6 @@
       ],
       "answer": 1,
       "explanation": "Les \\ du namespace deviennent des séparateurs de dossiers, puis on ajoute .php."
-    },
-    {
-      "id": "piephp-068",
-      "category": "autoload",
-      "file": "Core/autoload.php",
-      "question": "Que fait l'autoloader si le chemin tiré du namespace n'existe pas ?",
-      "choices": [
-        "Il cherche le nom court dans les dossiers de src/",
-        "Il lance une exception « Classe introuvable »",
-        "Il cherche la classe dans le dossier vendor/",
-        "Il affiche directement la page 404 du site"
-      ],
-      "answer": 0,
-      "explanation": "Le sujet prévoit des classes rangées dans les dossiers de src/."
-    },
-    {
-      "id": "piephp-069",
-      "category": "autoload",
-      "file": "Core/autoload.php",
-      "question": "Pourquoi l'autoloader ne lance-t-il pas d'erreur s'il ne trouve rien ?",
-      "choices": [
-        "Pour que la page s'affiche malgré tout",
-        "Pour laisser essayer un autre autoloader",
-        "Parce que la 404 le fait déjà",
-        "Pour que la page 404 s'affiche à la place de l'erreur"
-      ],
-      "answer": 1,
-      "explanation": "Comme celui de Composer. Si personne ne trouve, PHP lève « Class not found »."
     },
     {
       "id": "piephp-070",
@@ -1106,34 +752,6 @@
       "explanation": "C'est le travail de run()."
     },
     {
-      "id": "piephp-072",
-      "category": "core",
-      "file": "Core/Core.php",
-      "question": "Quel est l'ordre de priorité de autoRoute() pour le controller ?",
-      "choices": [
-        "'app', puis l'URL, puis ?c=",
-        "routes.php, puis ?c=, puis l'URL",
-        "L'URL, puis ?c=, puis 'app'",
-        "?c=, puis l'URL, puis 'app'"
-      ],
-      "answer": 2,
-      "explanation": "$parts[0] ?? $_GET['c'] ?? 'app'."
-    },
-    {
-      "id": "piephp-073",
-      "category": "core",
-      "file": "Core/Core.php",
-      "question": "Pourquoi run() saute-t-il Router::get() quand l'URL contient ?c= ou ?a= ?",
-      "choices": [
-        "Parce que Router ne sait pas lire les paramètres GET",
-        "Sinon /?c=user&a=add tomberait sur la route « / » déclarée pour la page d'accueil",
-        "Pour éviter de charger deux fois le fichier src/routes.php du projet",
-        "Pour éviter de charger deux fois le fichier routes.php"
-      ],
-      "answer": 1,
-      "explanation": "L'URL « / » est déclarée dans routes.php pour l'accueil."
-    },
-    {
       "id": "piephp-074",
       "category": "core",
       "file": "Core/Core.php",
@@ -1148,20 +766,6 @@
       "explanation": "Le Core ajoute le namespace, ucfirst() et les suffixes Controller / Action."
     },
     {
-      "id": "piephp-075",
-      "category": "core",
-      "file": "Core/Core.php",
-      "question": "Pourquoi le Core n'accepte-t-il que des noms alphanumériques (ctype_alnum) ?",
-      "choices": [
-        "PSR-12 interdit les autres caractères dans les noms",
-        "PHP refuse les méthodes qui contiennent un chiffre",
-        "Ils viennent de l'URL et pourraient viser un fichier",
-        "Les tirets cassent la regex du routeur statique"
-      ],
-      "answer": 2,
-      "explanation": "Une URL comme /../../secret pourrait sinon faire inclure n'importe quel fichier par l'autoloader."
-    },
-    {
       "id": "piephp-076",
       "category": "core",
       "file": "Core/Core.php",
@@ -1174,48 +778,6 @@
       ],
       "answer": 0,
       "explanation": "class_exists() déclenche l'autoloader et renvoie simplement false."
-    },
-    {
-      "id": "piephp-077",
-      "category": "core",
-      "file": "Core/Core.php",
-      "question": "Que fait notFound() ?",
-      "choices": [
-        "Redirection vers la page d'accueil",
-        "Message 404 écrit dans un journal",
-        "Elle envoie le code HTTP 404, puis affiche la vue src/View/Error/404.php",
-        "Elle lance une exception attrapée plus haut par index.php"
-      ],
-      "answer": 2,
-      "explanation": "Le sujet demande d'afficher « 404 » si le controller ou l'action n'existe pas."
-    },
-    {
-      "id": "piephp-078",
-      "category": "core",
-      "file": "Core/Core.php",
-      "question": "Pourquoi envoyer le vrai code 404 avec http_response_code(404) ?",
-      "choices": [
-        "Sinon le navigateur réessaierait en boucle",
-        "Sinon la vue 404.php ne pourrait pas s'afficher",
-        "Sinon Apache afficherait sa propre page 404",
-        "Sinon la page serait vue comme un succès (200)"
-      ],
-      "answer": 3,
-      "explanation": "Le contenu dit « introuvable », le code HTTP doit le dire aussi, pour les robots notamment."
-    },
-    {
-      "id": "piephp-079",
-      "category": "core",
-      "file": "Core/Core.php",
-      "question": "Pourquoi les méthodes appelables par URL finissent-elles par « Action » ?",
-      "choices": [
-        "Pour que l'autoloader retrouve le bon fichier",
-        "Pour qu'une méthode outil ne soit pas appelable par URL",
-        "Pour que les méthodes deviennent statiques",
-        "Parce que PHP réserve ce suffixe aux méthodes publiques"
-      ],
-      "answer": 1,
-      "explanation": "/user/helper cherche helperAction() : une méthode helper() reste inaccessible."
     },
     {
       "id": "piephp-080",
@@ -1258,20 +820,6 @@
       ],
       "answer": 3,
       "explanation": "connect() prend l'URL puis un tableau controller / action, en noms courts."
-    },
-    {
-      "id": "piephp-083",
-      "category": "router",
-      "file": "Core/Router.php",
-      "question": "Que renvoie Router::get() quand aucune route ne correspond ?",
-      "choices": [
-        "false",
-        "null",
-        "[]",
-        "'404'"
-      ],
-      "answer": 1,
-      "explanation": "Le Core tente alors le routage automatique."
     },
     {
       "id": "piephp-084",
@@ -1328,20 +876,6 @@
       ],
       "answer": 2,
       "explanation": "Par exemple /film/{id} → #^/film/(\\d+)$#, puis le groupe capturé devient le paramètre de l'action."
-    },
-    {
-      "id": "piephp-088",
-      "category": "router",
-      "file": "Core/Core.php",
-      "question": "Avec le routage automatique, que donne l'URL /film/show/3 ?",
-      "choices": [
-        "Une 404, car l'URL a trois morceaux",
-        "FilmController::showAction(3), avec le 3 en paramètre",
-        "FilmController::show3Action()",
-        "FilmController::showAction() est appelée, le « 3 » est simplement ignoré"
-      ],
-      "answer": 3,
-      "explanation": "autoRoute() ne lit que les deux premiers morceaux de l'URL."
     },
     {
       "id": "piephp-089",
@@ -1428,34 +962,6 @@
       "explanation": "Output buffering : les echo vont dans un tampon au lieu de partir au navigateur."
     },
     {
-      "id": "piephp-095",
-      "category": "controller",
-      "file": "Core/Controller.php",
-      "question": "Que se passe-t-il si le fichier de vue n'existe pas ?",
-      "choices": [
-        "Une RuntimeException est lancée",
-        "Le layout s'affiche avec un contenu vide",
-        "La page 404 du site s'affiche à la place de la vue demandée",
-        "La page reste blanche, sans aucun message"
-      ],
-      "answer": 0,
-      "explanation": "Le code du sujet ne faisait rien ; une exception est plus facile à déboguer."
-    },
-    {
-      "id": "piephp-096",
-      "category": "controller",
-      "file": "Core/Controller.php",
-      "question": "Avec quel code HTTP redirect() renvoie-t-elle le visiteur ?",
-      "choices": [
-        "302 Found",
-        "307 Temporary Redirect",
-        "303 See Other",
-        "301 Moved Permanently"
-      ],
-      "answer": 2,
-      "explanation": "303 demande au navigateur de charger la nouvelle page en GET."
-    },
-    {
       "id": "piephp-097",
       "category": "controller",
       "file": "Core/Controller.php",
@@ -1468,62 +974,6 @@
       ],
       "answer": 0,
       "explanation": "Sans cela, F5 renverrait le formulaire et ajouterait le film deux fois."
-    },
-    {
-      "id": "piephp-098",
-      "category": "controller",
-      "file": "Core/Controller.php",
-      "question": "Pourquoi redirect() refuse-t-elle '//exemple.com' ?",
-      "choices": [
-        "PHP n'accepte pas deux slashs dans header()",
-        "C'est l'adresse d'un autre site",
-        "Les doubles slashs cassent le routage automatique du Core",
-        "Les doubles slashs cassent le routage automatique"
-      ],
-      "answer": 1,
-      "explanation": "On ne redirige jamais vers l'extérieur (faille « open redirect »)."
-    },
-    {
-      "id": "piephp-099",
-      "category": "controller",
-      "file": "Core/Controller.php",
-      "question": "Qu'est-ce qu'un message « flash » ?",
-      "choices": [
-        "Une alerte JavaScript que le layout affiche quelques secondes",
-        "Une erreur PHP affichée en haut de page",
-        "Une alerte JavaScript affichée par le layout",
-        "Un message rangé dans la session, affiché une seule fois sur la page suivante"
-      ],
-      "answer": 3,
-      "explanation": "takeFlash() le retire de la session en le lisant."
-    },
-    {
-      "id": "piephp-100",
-      "category": "controller",
-      "file": "Core/Controller.php",
-      "question": "Pourquoi le message flash passe-t-il par la session ?",
-      "choices": [
-        "La session est plus rapide que les variables",
-        "Le layout ne lit que $_SESSION",
-        "Le message doit être vu par tous les visiteurs",
-        "La page suivante est une nouvelle requête"
-      ],
-      "answer": 3,
-      "explanation": "Après une redirection, les variables PHP de l'action précédente n'existent plus."
-    },
-    {
-      "id": "piephp-101",
-      "category": "controller",
-      "file": "Core/Controller.php",
-      "question": "Quelles variables render() donne-t-elle à toutes les vues ?",
-      "choices": [
-        "$_GET et $_POST",
-        "$flash et $currentUserId",
-        "$title et $error",
-        "$title et $view"
-      ],
-      "answer": 1,
-      "explanation": "Le layout s'en sert pour le message flash et le menu Profil / Connexion."
     },
     {
       "id": "piephp-102",
@@ -1554,34 +1004,6 @@
       "explanation": "Cacher un bouton est du confort ; la sécurité se fait côté serveur."
     },
     {
-      "id": "piephp-104",
-      "category": "controller",
-      "file": "Core/Controller.php",
-      "question": "Que renvoie queryId() pour l'URL ?id=3abc ?",
-      "choices": [
-        "'3abc'",
-        "0",
-        "null",
-        "3"
-      ],
-      "answer": 2,
-      "explanation": "ctype_digit() exige uniquement des chiffres."
-    },
-    {
-      "id": "piephp-105",
-      "category": "controller",
-      "file": "Core/Controller.php",
-      "question": "Pourquoi databaseError() ne montre-t-elle pas le détail de l'erreur ?",
-      "choices": [
-        "Le message est trop long pour le layout",
-        "L'exception PDO n'a pas de message lisible",
-        "Le message de PDO est en anglais et trop technique",
-        "Pour ne rien révéler du serveur"
-      ],
-      "answer": 3,
-      "explanation": "On affiche un message générique qui renvoie vers config.json et database.sql."
-    },
-    {
       "id": "piephp-106",
       "category": "request",
       "file": "Core/Request.php",
@@ -1594,20 +1016,6 @@
       ],
       "answer": 3,
       "explanation": "Les controllers lisent $this->request->getPost('email') au lieu de $_POST."
-    },
-    {
-      "id": "piephp-107",
-      "category": "request",
-      "file": "Core/Request.php",
-      "question": "Où l'objet Request est-il créé ?",
-      "choices": [
-        "Dans index.php, avant Core::run()",
-        "Dans le constructeur de Core\\Controller, la classe mère de tous les controllers",
-        "Dans Core::run(), juste avant d'appeler l'action",
-        "Dans Core::run(), avant l'action"
-      ],
-      "answer": 1,
-      "explanation": "Le sujet le veut dans tous les controllers : la classe mère suffit."
     },
     {
       "id": "piephp-108",
@@ -1636,48 +1044,6 @@
       ],
       "answer": 0,
       "explanation": "Elle protège l'affichage HTML, pas la base de données."
-    },
-    {
-      "id": "piephp-110",
-      "category": "request",
-      "file": "Core/Request.php",
-      "question": "Que fait isPost() ?",
-      "choices": [
-        "Envoie le formulaire en POST",
-        "Dit si la méthode HTTP est POST",
-        "Vérifie que $_POST n'est pas vide",
-        "Dit si $_POST n'est pas vide"
-      ],
-      "answer": 1,
-      "explanation": "Une même action affiche le formulaire en GET et le traite en POST."
-    },
-    {
-      "id": "piephp-111",
-      "category": "request",
-      "file": "Core/Request.php",
-      "question": "Que renvoie getQueryParams() si 'email' est à la fois dans l'URL et le formulaire ?",
-      "choices": [
-        "Un tableau avec les deux valeurs",
-        "La valeur de l'URL (GET)",
-        "La valeur du formulaire (POST)",
-        "Une exception pour doublon"
-      ],
-      "answer": 2,
-      "explanation": "array_merge($query, $post) : le 2e tableau écrase les clés communes."
-    },
-    {
-      "id": "piephp-112",
-      "category": "request",
-      "file": "Core/Request.php",
-      "question": "Pourquoi clean() s'appelle-t-elle elle-même ?",
-      "choices": [
-        "Pour nettoyer aussi les fichiers envoyés",
-        "Pour les sous-tableaux (tags[])",
-        "Pour nettoyer chaque valeur une deuxième fois",
-        "Pour nettoyer chaque valeur une seconde fois par sécurité"
-      ],
-      "answer": 1,
-      "explanation": "C'est une fonction récursive."
     },
     {
       "id": "piephp-113",
@@ -1778,20 +1144,6 @@
       "explanation": "Sinon PHP simule la préparation en collant lui-même les valeurs."
     },
     {
-      "id": "piephp-120",
-      "category": "database",
-      "file": "Core/Database.php",
-      "question": "Quel fichier de configuration est lu s'il existe ?",
-      "choices": [
-        "config.local.json, à la place de config.json",
-        "exemple.config.local.json, en dernier recours",
-        "config.json, complété par config.local.json",
-        ".env, comme dans Laravel"
-      ],
-      "answer": 0,
-      "explanation": "config.local.json contient tes vrais identifiants."
-    },
-    {
       "id": "piephp-121",
       "category": "database",
       "file": ".gitignore",
@@ -1804,34 +1156,6 @@
       ],
       "answer": 0,
       "explanation": "Le .htaccess protège du navigateur, pas de Git."
-    },
-    {
-      "id": "piephp-122",
-      "category": "database",
-      "file": "exemple.config.local.json",
-      "question": "À quoi sert exemple.config.local.json ?",
-      "choices": [
-        "Configuration lue si l'autre manque",
-        "Configuration utilisée par la CI",
-        "Configuration lue si config.json est absent",
-        "Modèle à copier en config.local.json"
-      ],
-      "answer": 3,
-      "explanation": "Mêmes clés, valeurs à remplacer."
-    },
-    {
-      "id": "piephp-123",
-      "category": "database",
-      "file": "Core/Database.php",
-      "question": "À quoi sert Database::setConnection() ?",
-      "choices": [
-        "À fermer proprement la connexion à la fin de la requête",
-        "À fermer la connexion en fin de requête",
-        "À changer le mot de passe de l'utilisateur",
-        "À changer de base (tests)"
-      ],
-      "answer": 3,
-      "explanation": "Les tests passent une base SQLite en mémoire."
     },
     {
       "id": "piephp-124",
@@ -1890,62 +1214,6 @@
       "explanation": "La valeur est envoyée à part par execute()."
     },
     {
-      "id": "piephp-128",
-      "category": "orm",
-      "file": "Core/ORM.php",
-      "question": "Que renvoie ORM::create() ?",
-      "choices": [
-        "true si l'insertion a réussi",
-        "Le nombre de lignes insérées",
-        "L'id de la nouvelle ligne",
-        "La ligne complète insérée"
-      ],
-      "answer": 2,
-      "explanation": "Avec lastInsertId() : c'est la base qui choisit l'id."
-    },
-    {
-      "id": "piephp-129",
-      "category": "orm",
-      "file": "Core/ORM.php",
-      "question": "Pourquoi ORM::update() refuse-t-il de modifier la colonne id ?",
-      "choices": [
-        "MySQL interdit de modifier une clé primaire existante",
-        "MySQL interdit de modifier une clé primaire",
-        "L'id sert au WHERE",
-        "L'id est toujours en lecture seule dans PDO"
-      ],
-      "answer": 2,
-      "explanation": "Et le marqueur :id est déjà utilisé par WHERE id = :id."
-    },
-    {
-      "id": "piephp-130",
-      "category": "orm",
-      "file": "Core/ORM.php",
-      "question": "Que renvoient update() et delete() de l'ORM ?",
-      "choices": [
-        "true dès que la requête est valide",
-        "true si au moins une ligne a été touchée",
-        "L'id de la ligne modifiée ou supprimée",
-        "Le nombre de colonnes réellement modifiées"
-      ],
-      "answer": 1,
-      "explanation": "rowCount() > 0 : on sait si la ligne existait."
-    },
-    {
-      "id": "piephp-131",
-      "category": "orm",
-      "file": "Core/ORM.php",
-      "question": "Quels sont les paramètres par défaut de find() ?",
-      "choices": [
-        "WHERE '1', ORDER BY 'id ASC', LIMIT ''",
-        "WHERE '', ORDER BY 'id DESC', LIMIT 10",
-        "WHERE '1', ORDER BY '', LIMIT 100",
-        "WHERE 'id', ORDER BY 'id ASC', LIMIT 1"
-      ],
-      "answer": 0,
-      "explanation": "Une condition toujours vraie, du plus ancien au plus récent, sans limite. Ce sont ceux du sujet."
-    },
-    {
       "id": "piephp-132",
       "category": "orm",
       "file": "Core/ORM.php",
@@ -1958,48 +1226,6 @@
       ],
       "answer": 3,
       "explanation": "Il devient « email = :email » avec une valeur envoyée à part."
-    },
-    {
-      "id": "piephp-133",
-      "category": "orm",
-      "file": "Core/ORM.php",
-      "question": "Pourquoi l'ORM vérifie-t-il les noms de tables et de colonnes ?",
-      "choices": [
-        "Pour les convertir en minuscules avant la requête",
-        "PDO ne prépare que des valeurs, pas des noms",
-        "Pour respecter les conventions de nommage MySQL",
-        "Pour vérifier que les colonnes existent en base"
-      ],
-      "answer": 1,
-      "explanation": "Un nom piégé comme « users; DROP TABLE users » est refusé par checkName()."
-    },
-    {
-      "id": "piephp-134",
-      "category": "orm",
-      "file": "Core/ORM.php",
-      "question": "Avec find(), que donne 'LIMIT' => '20, 10' ?",
-      "choices": [
-        "Les lignes 20 à 30",
-        "Les lignes 11 à 30",
-        "Les lignes 21 à 30",
-        "Les lignes 10 à 20"
-      ],
-      "answer": 2,
-      "explanation": "On saute 20 lignes et on en prend 10 : utile pour paginer."
-    },
-    {
-      "id": "piephp-135",
-      "category": "orm",
-      "file": "Core/ORM.php",
-      "question": "Qu'est-ce que le problème « N+1 » de l'ORM ?",
-      "choices": [
-        "Une ligne de trop renvoyée par chaque find()",
-        "Une boucle infinie entre deux relations",
-        "Une requête de plus par ligne pour lire ses relations",
-        "Une ligne en trop renvoyée par chaque appel à find()"
-      ],
-      "answer": 2,
-      "explanation": "Sans gravité pour un petit site, plus simple qu'une seule grosse requête."
     },
     {
       "id": "piephp-136",
@@ -2086,20 +1312,6 @@
       "explanation": "Rien de modifié = aucune requête."
     },
     {
-      "id": "piephp-142",
-      "category": "entity",
-      "file": "Core/Entity.php",
-      "question": "Pourquoi save() n'envoie-t-il que les colonnes modifiées ?",
-      "choices": [
-        "Pour ne pas re-hacher",
-        "Parce que MySQL refuse les UPDATE complets",
-        "Pour garder l'ordre des colonnes",
-        "Pour respecter la norme PSR-12"
-      ],
-      "answer": 0,
-      "explanation": "Le mot de passe lu en base est une empreinte : la renvoyer la ferait hacher une 2e fois."
-    },
-    {
       "id": "piephp-143",
       "category": "entity",
       "file": "Core/Entity.php",
@@ -2128,34 +1340,6 @@
       "explanation": "Liaison statique tardive : self:: viserait Entity, la classe où le code est écrit."
     },
     {
-      "id": "piephp-145",
-      "category": "entity",
-      "file": "Core/Entity.php",
-      "question": "Pourquoi Entity porte-t-elle #[AllowDynamicProperties] ?",
-      "choices": [
-        "Pour rendre tous les attributs privés",
-        "Pour autoriser une classe à hériter de deux classes",
-        "PHP 8.2 interdit les attributs publics",
-        "Depuis PHP 8.2, créer un attribut non déclaré affiche un avertissement « Deprecated »"
-      ],
-      "answer": 3,
-      "explanation": "Le sujet demande un attribut public par clé du tableau : ce sont des attributs dynamiques."
-    },
-    {
-      "id": "piephp-146",
-      "category": "entity",
-      "file": "Core/Entity.php",
-      "question": "À quoi sert RESERVED = ['db', 'orm', 'original'] ?",
-      "choices": [
-        "Lister les colonnes obligatoires de chaque table",
-        "Lister les mots interdits dans les requêtes SQL",
-        "Lister les attributs que save() doit envoyer",
-        "Empêcher une clé d'écraser un attribut interne"
-      ],
-      "answer": 3,
-      "explanation": "Sans elle, un champ « db » remplacerait la connexion par une chaîne."
-    },
-    {
       "id": "piephp-147",
       "category": "entity",
       "file": "Core/Entity.php",
@@ -2168,48 +1352,6 @@
       ],
       "answer": 2,
       "explanation": "Les tests lui passent une base SQLite en mémoire."
-    },
-    {
-      "id": "piephp-148",
-      "category": "entity",
-      "file": "Core/Entity.php",
-      "question": "À quoi sert le crochet columns() ?",
-      "choices": [
-        "Lister les colonnes lues par read()",
-        "Créer les colonnes manquantes dans la table",
-        "Trier les colonnes avant de les afficher",
-        "Donner la liste blanche des colonnes à enregistrer"
-      ],
-      "answer": 3,
-      "explanation": "Les autres attributs (un bouton submit...) restent sur l'objet sans aller en base."
-    },
-    {
-      "id": "piephp-149",
-      "category": "entity",
-      "file": "Core/Entity.php",
-      "question": "À quoi sert le crochet prepareFields() ?",
-      "choices": [
-        "Traiter les champs juste avant l'écriture",
-        "Valider le formulaire avant l'envoi",
-        "Remplir l'objet à partir des données de $_POST",
-        "Remplir l'objet à partir de $_POST"
-      ],
-      "answer": 0,
-      "explanation": "UserModel le redéfinit pour hacher le mot de passe."
-    },
-    {
-      "id": "piephp-150",
-      "category": "entity",
-      "file": "Core/Entity.php",
-      "question": "Que fait $user->delete() sans argument ?",
-      "choices": [
-        "Supprime toutes les lignes de la table",
-        "Supprime sa propre ligne",
-        "Détruit l'objet PHP mais pas la ligne",
-        "Détruit l'objet PHP mais garde la ligne en base"
-      ],
-      "answer": 1,
-      "explanation": "Un save() ensuite recréerait une nouvelle ligne."
     },
     {
       "id": "piephp-151",
@@ -2310,48 +1452,6 @@
       "explanation": "Seules les paires qui respectent la condition ON sont gardées."
     },
     {
-      "id": "piephp-158",
-      "category": "relations",
-      "file": "Core/ORM.php",
-      "question": "Que contient l'entrée d'une relation 'has one' dans la ligne lue ?",
-      "choices": [
-        "Un objet de l'autre model",
-        "Une liste de lignes",
-        "Une seule ligne, ou null",
-        "L'id de la ligne liée"
-      ],
-      "answer": 2,
-      "explanation": "has many et many to many renvoient une liste, éventuellement vide."
-    },
-    {
-      "id": "piephp-159",
-      "category": "relations",
-      "file": "Core/Entity.php",
-      "question": "Comment Entity lit-elle l'attribut privé $relations d'un model ?",
-      "choices": [
-        "Avec parent::$relations",
-        "Avec un getter public",
-        "Avec la Reflection",
-        "Avec get_object_vars()"
-      ],
-      "answer": 2,
-      "explanation": "ReflectionProperty::getValue() lit même un attribut privé."
-    },
-    {
-      "id": "piephp-160",
-      "category": "relations",
-      "file": "Core/Entity.php",
-      "question": "Pourquoi Entity ne déclare-t-elle pas elle-même $relations ?",
-      "choices": [
-        "Les attributs statiques ne s'héritent pas",
-        "Une classe abstraite n'a pas d'attributs",
-        "La fille ne pourrait plus le déclarer private",
-        "Les attributs statiques ne sont jamais hérités en PHP"
-      ],
-      "answer": 2,
-      "explanation": "On ne peut pas réduire la visibilité d'un attribut hérité."
-    },
-    {
       "id": "piephp-161",
       "category": "relations",
       "file": "src/Model/FilmModel.php",
@@ -2408,90 +1508,6 @@
       "explanation": "Un <script> saisi par un visiteur s'afficherait en texte au lieu de s'exécuter."
     },
     {
-      "id": "piephp-165",
-      "category": "template",
-      "file": "Core/TemplateEngine.php",
-      "question": "En quoi est compilé @if ($a > 1) ?",
-      "choices": [
-        "<?php if ($a > 1); ?>",
-        "<?php if ($a > 1) then ?>",
-        "<?php if ($a > 1) { ?>",
-        "<?php if ($a > 1) : ?>"
-      ],
-      "answer": 3,
-      "explanation": "La syntaxe alternative de PHP, faite pour les vues."
-    },
-    {
-      "id": "piephp-166",
-      "category": "template",
-      "file": "Core/TemplateEngine.php",
-      "question": "Comment se termine un bloc @isset($film) ?",
-      "choices": [
-        "@stopisset",
-        "@end",
-        "@endisset",
-        "@endif"
-      ],
-      "answer": 2,
-      "explanation": "Il est compilé en endif, car @isset est un raccourci de @if."
-    },
-    {
-      "id": "piephp-167",
-      "category": "template",
-      "file": "Core/TemplateEngine.php",
-      "question": "Quand une vue est-elle recompilée ?",
-      "choices": [
-        "Une fois par jour, au premier visiteur",
-        "Seulement quand on vide le cache à la main",
-        "À chaque affichage de la page, sans exception",
-        "Quand son fichier a changé depuis la compilation"
-      ],
-      "answer": 3,
-      "explanation": "On compare les dates avec filemtime() : c'est le cache des vues proposé par le sujet."
-    },
-    {
-      "id": "piephp-168",
-      "category": "template",
-      "file": "Core/TemplateEngine.php",
-      "question": "Quelles fonctions PHP le sujet conseille-t-il pour le moteur de templates ?",
-      "choices": [
-        "eval() sur le texte de la vue",
-        "Les regex avec preg_replace()",
-        "DOMDocument pour parser le HTML",
-        "str_replace() sur chaque tag"
-      ],
-      "answer": 1,
-      "explanation": "Une regex reconnaît un tag et ses arguments, ce que str_replace ne sait pas faire."
-    },
-    {
-      "id": "piephp-169",
-      "category": "template",
-      "file": "Core/TemplateEngine.php",
-      "question": "Que devient une vue écrite en PHP pur, sans aucun tag ?",
-      "choices": [
-        "Elle est échappée en entier par sécurité",
-        "Elle provoque une erreur de compilation",
-        "Elle ressort identique du moteur",
-        "Elle n'est pas mise en cache"
-      ],
-      "answer": 2,
-      "explanation": "Les anciennes vues continuent donc de fonctionner."
-    },
-    {
-      "id": "piephp-170",
-      "category": "template",
-      "file": "Core/TemplateEngine.php",
-      "question": "Pourquoi le moteur écrit-il la vue compilée dans un fichier au lieu d'utiliser eval() ?",
-      "choices": [
-        "eval() n'existe plus depuis PHP 8",
-        "include lit des fichiers ; eval() est risqué",
-        "eval() ne voit pas les variables de la vue",
-        "Un fichier s'exécute deux fois plus vite"
-      ],
-      "answer": 1,
-      "explanation": "En plus, le fichier sert de cache."
-    },
-    {
       "id": "piephp-171",
       "category": "models",
       "file": "src/Model/UserModel.php",
@@ -2520,34 +1536,6 @@
       "explanation": "Deux password_hash() du même mot de passe donnent des empreintes différentes."
     },
     {
-      "id": "piephp-173",
-      "category": "models",
-      "file": "src/Model/UserModel.php",
-      "question": "Pourquoi deux mêmes mots de passe ont-ils des empreintes différentes ?",
-      "choices": [
-        "La date est ajoutée au hash",
-        "Un sel aléatoire est ajouté",
-        "L'heure est ajoutée au hash",
-        "L'email est ajouté au hash"
-      ],
-      "answer": 1,
-      "explanation": "Le sel est rangé dans l'empreinte, password_verify() sait le relire."
-    },
-    {
-      "id": "piephp-174",
-      "category": "models",
-      "file": "src/Model/UserModel.php",
-      "question": "Pourquoi checkCredentials() renvoie null dans les deux cas d'échec ?",
-      "choices": [
-        "Pour que la session reste vide dans les deux cas",
-        "Parce qu'on ne peut pas distinguer les deux cas",
-        "Pour ne faire qu'une seule requête SQL",
-        "Pour ne pas révéler quels emails sont inscrits"
-      ],
-      "answer": 3,
-      "explanation": "Email inconnu ou mot de passe faux : même message."
-    },
-    {
       "id": "piephp-175",
       "category": "models",
       "file": "src/Model/UserModel.php",
@@ -2560,104 +1548,6 @@
       ],
       "answer": 1,
       "explanation": "Un attribut private n'est visible que dans sa propre classe, pas dans la classe mère."
-    },
-    {
-      "id": "piephp-176",
-      "category": "models",
-      "file": "src/Model/FilmModel.php",
-      "question": "Quelle relation déclare FilmModel ?",
-      "choices": [
-        "'has many films'",
-        "'has one historique'",
-        "'has one genre'",
-        "'has many genres'"
-      ],
-      "answer": 2,
-      "explanation": "Chaque film garde l'id de son genre dans films.genre_id."
-    },
-    {
-      "id": "piephp-177",
-      "category": "models",
-      "file": "src/Model/GenreModel.php",
-      "question": "Quelle relation déclare GenreModel ?",
-      "choices": [
-        "'has many genres'",
-        "'has one film'",
-        "'has one genre'",
-        "'has many films'"
-      ],
-      "answer": 3,
-      "explanation": "Elle sert à refuser la suppression d'un genre qui contient encore des films."
-    },
-    {
-      "id": "piephp-178",
-      "category": "models",
-      "file": "src/Model/UserModel.php",
-      "question": "Pourquoi 'has many historiques' de UserModel est un 1:N et pas un N:N ?",
-      "choices": [
-        "UserModel ne déclare qu'une seule relation",
-        "Il y a plus d'historiques que d'utilisateurs",
-        "La table historiques a sa propre clé primaire",
-        "HistoriqueModel ne dit pas 'has many users'"
-      ],
-      "answer": 3,
-      "explanation": "Entity ne détecte un N:N que si les deux models disent 'has many' l'un de l'autre."
-    },
-    {
-      "id": "piephp-179",
-      "category": "models",
-      "file": "src/Model/FilmModel.php",
-      "question": "Pourquoi FilmModel redéfinit-il delete() ?",
-      "choices": [
-        "Pour interdire la suppression des films",
-        "Pour garder le film en base en le masquant seulement",
-        "Pour supprimer aussi le genre du film",
-        "Pour vider l'historique d'abord"
-      ],
-      "answer": 3,
-      "explanation": "Puis parent::delete(). La base le fait aussi (ON DELETE CASCADE), mais pas SQLite par défaut."
-    },
-    {
-      "id": "piephp-180",
-      "category": "models",
-      "file": "src/Model/FilmModel.php",
-      "question": "Où sont écrites les règles de validation d'un film ?",
-      "choices": [
-        "Dans FilmModel::validate()",
-        "Dans la vue src/View/Film/form.php",
-        "Dans la classe Core\\Request",
-        "Dans FilmController::addAction()"
-      ],
-      "answer": 0,
-      "explanation": "Le controller demande juste « est-ce valide ? ». Les règles du film sont dans son model."
-    },
-    {
-      "id": "piephp-181",
-      "category": "controllers",
-      "file": "src/Controller/AppController.php",
-      "question": "Que fait AppController::indexAction() ?",
-      "choices": [
-        "Affiche les derniers films vus par le membre connecté",
-        "Affiche la liste des genres",
-        "Affiche le formulaire de connexion",
-        "Elle affiche la page d'accueil avec la liste des films, triés par titre"
-      ],
-      "answer": 3,
-      "explanation": "C'est le controller par défaut de l'URL « / »."
-    },
-    {
-      "id": "piephp-182",
-      "category": "controllers",
-      "file": "src/Controller/UserController.php",
-      "question": "Quelle fonction vérifie la forme d'une adresse email ?",
-      "choices": [
-        "filter_input($email, FILTER_SANITIZE_EMAIL)",
-        "ctype_alnum($email)",
-        "preg_match('/@/', $email)",
-        "filter_var($email, FILTER_VALIDATE_EMAIL)"
-      ],
-      "answer": 3,
-      "explanation": "SANITIZE nettoie, VALIDATE vérifie : ici on veut vérifier."
     },
     {
       "id": "piephp-183",
@@ -2674,34 +1564,6 @@
       "explanation": "Les autres controllers le relisent avec currentUserId()."
     },
     {
-      "id": "piephp-184",
-      "category": "controllers",
-      "file": "src/Controller/UserController.php",
-      "question": "Pourquoi appeler session_regenerate_id(true) à la connexion ?",
-      "choices": [
-        "Pour déconnecter les autres comptes",
-        "Pour vider le message flash",
-        "Contre la fixation de session",
-        "Pour allonger la durée de la session"
-      ],
-      "answer": 2,
-      "explanation": "Un identifiant volé avant la connexion ne sert plus à rien."
-    },
-    {
-      "id": "piephp-185",
-      "category": "controllers",
-      "file": "src/Controller/UserController.php",
-      "question": "Comment logoutAction() déconnecte-t-elle le membre ?",
-      "choices": [
-        "$_SESSION = [] puis session_destroy()",
-        "session_regenerate_id(true) seulement",
-        "setcookie('PHPSESSID', '') seulement",
-        "unset($_SESSION['user_id']) seulement"
-      ],
-      "answer": 0,
-      "explanation": "On vide pour la requête en cours, puis on supprime la session côté serveur."
-    },
-    {
       "id": "piephp-186",
       "category": "controllers",
       "file": "src/Controller/UserController.php",
@@ -2716,62 +1578,6 @@
       "explanation": "On ne peut modifier que son propre profil."
     },
     {
-      "id": "piephp-187",
-      "category": "controllers",
-      "file": "src/Controller/UserController.php",
-      "question": "Pourquoi supprimer son compte demande-t-il deux étapes (GET puis POST) ?",
-      "choices": [
-        "Seul le POST supprime",
-        "DELETE n'existe pas dans les méthodes HTTP",
-        "Il faut d'abord envoyer un email de confirmation",
-        "Le POST doit être précédé d'un GET pour la session"
-      ],
-      "answer": 0,
-      "explanation": "Jamais d'action destructive sur un simple lien."
-    },
-    {
-      "id": "piephp-188",
-      "category": "controllers",
-      "file": "src/Controller/GenreController.php",
-      "question": "Que se passe-t-il si on supprime un genre qui a encore des films ?",
-      "choices": [
-        "Les films sont supprimés aussi",
-        "Une erreur SQL s'affiche",
-        "Les films passent sans genre",
-        "Refus, avec un message flash"
-      ],
-      "answer": 3,
-      "explanation": "$genre->films (relation 'has many films') n'est pas vide."
-    },
-    {
-      "id": "piephp-189",
-      "category": "controllers",
-      "file": "src/Controller/HistoriqueController.php",
-      "question": "Que vérifie deleteAction() de l'historique avant de supprimer ?",
-      "choices": [
-        "Que la ligne existe, rien de plus",
-        "Que le membre est administrateur du site",
-        "Que le film de la ligne existe encore",
-        "Que la ligne existe et appartient au membre"
-      ],
-      "answer": 3,
-      "explanation": "Sinon on pourrait effacer l'historique d'un autre en changeant l'id."
-    },
-    {
-      "id": "piephp-190",
-      "category": "controllers",
-      "file": "src/Controller/FilmController.php",
-      "question": "Pourquoi les actions attrapent-elles PDOException | RuntimeException ?",
-      "choices": [
-        "Pour un message clair si la base ne répond pas",
-        "Parce que PSR-12 impose un try autour du SQL",
-        "Pour relancer automatiquement la requête qui a échoué",
-        "Pour ignorer les erreurs et continuer l'action"
-      ],
-      "answer": 0,
-      "explanation": "Le visiteur voit databaseError() au lieu d'une erreur PHP."
-    },
-    {
       "id": "piephp-191",
       "category": "vues",
       "file": "src/View/index.php",
@@ -2784,76 +1590,6 @@
       ],
       "answer": 2,
       "explanation": "render() y insère la vue dans la variable $view."
-    },
-    {
-      "id": "piephp-192",
-      "category": "vues",
-      "file": "src/View/index.php",
-      "question": "Que signifie <?= $x ?> ?",
-      "choices": [
-        "<?php isset($x); ?>",
-        "<?php $x = true; ?>",
-        "<?php return $x; ?>",
-        "<?php echo $x; ?>"
-      ],
-      "answer": 3,
-      "explanation": "C'est la balise d'affichage courte."
-    },
-    {
-      "id": "piephp-193",
-      "category": "vues",
-      "file": "src/View/index.php",
-      "question": "Pourquoi $view est-elle affichée sans échappement dans le layout ?",
-      "choices": [
-        "htmlspecialchars() ne marche pas dans un layout",
-        "$view ne contient que du texte sans balise",
-        "C'est une faille qu'il faudrait corriger",
-        "C'est du HTML produit par nos propres vues"
-      ],
-      "answer": 3,
-      "explanation": "L'échapper afficherait les balises en texte. Les données, elles, sont échappées dans la vue."
-    },
-    {
-      "id": "piephp-194",
-      "category": "vues",
-      "file": "src/View/Film/show.php",
-      "question": "Pourquoi le résumé utilise nl2br(htmlspecialchars(...)) au lieu de {{ }} ?",
-      "choices": [
-        "{{ }} échapperait les <br> ajoutés par nl2br()",
-        "Le résumé est déjà enregistré en HTML",
-        "{{ }} ne sait pas afficher un texte très long",
-        "nl2br() doit toujours passer avant l'échappement"
-      ],
-      "answer": 0,
-      "explanation": "On échappe d'abord, puis on ajoute les <br>."
-    },
-    {
-      "id": "piephp-195",
-      "category": "vues",
-      "file": "src/View/index.php",
-      "question": "Quelle syntaxe PHP le layout utilise-t-il pour ses conditions ?",
-      "choices": [
-        "if (...) : ... endif;",
-        "if (...) then ... fi",
-        "if (...) { ... }",
-        "{% if %} ... {% endif %}"
-      ],
-      "answer": 0,
-      "explanation": "La syntaxe alternative, plus lisible au milieu du HTML."
-    },
-    {
-      "id": "piephp-196",
-      "category": "vues",
-      "file": "src/View/User/login.php",
-      "question": "Que demande le sujet pour la page login.php de la première étape ?",
-      "choices": [
-        "Une page en HTML5 avec un formulaire GET",
-        "Une page de connexion avec captcha",
-        "Une page PHP qui vérifie l'email et le mot de passe",
-        "Une page valide W3C avec un formulaire POST"
-      ],
-      "answer": 3,
-      "explanation": "Avec les champs email et password, envoyés vers /index.php."
     },
     {
       "id": "piephp-197",
@@ -3010,20 +1746,6 @@
       "explanation": "Même si la base fuite, les mots de passe restent secrets."
     },
     {
-      "id": "piephp-208",
-      "category": "securite",
-      "file": "src/Controller/UserController.php",
-      "question": "Pourquoi la vue du profil ne reçoit-elle jamais le mot de passe ?",
-      "choices": [
-        "Le mot de passe est vide après la lecture",
-        "On ne transmet à une vue que ce qu'elle affiche, jamais une empreinte de mot de passe",
-        "Le mot de passe est effacé de la base après la connexion",
-        "PSR-12 interdit de passer un mot de passe"
-      ],
-      "answer": 1,
-      "explanation": "showAction() ne transmet que id et email."
-    },
-    {
       "id": "piephp-209",
       "category": "securite",
       "file": "src/View/Film/form.php",
@@ -3036,34 +1758,6 @@
       ],
       "answer": 0,
       "explanation": "Un autre site pourrait faire envoyer un POST à un membre connecté. Les frameworks ajoutent un jeton caché (@csrf dans Laravel)."
-    },
-    {
-      "id": "piephp-210",
-      "category": "securite",
-      "file": "Core/Controller.php",
-      "question": "Qu'est-ce qu'une « open redirect » ?",
-      "choices": [
-        "Une redirection qui garde les paramètres de l'URL",
-        "Une redirection qui tourne en boucle entre deux pages",
-        "Une redirection vers un autre site",
-        "Une redirection envoyée sans code HTTP précis"
-      ],
-      "answer": 2,
-      "explanation": "redirect() n'accepte qu'un chemin interne qui commence par un seul /."
-    },
-    {
-      "id": "piephp-211",
-      "category": "securite",
-      "file": ".htaccess",
-      "question": "Pourquoi config.json n'est-il pas lisible depuis le navigateur ?",
-      "choices": [
-        "Il est listé dans le fichier .gitignore",
-        "Il est chiffré avec le mot de passe MySQL",
-        "Apache ne sert jamais de fichier .json",
-        "Le .htaccess l'envoie vers index.php"
-      ],
-      "answer": 3,
-      "explanation": "Seuls webroot/, index.php et robots.txt sont servis directement."
     },
     {
       "id": "piephp-212",
@@ -3108,34 +1802,6 @@
       "explanation": "Il faut écrire ['WHERE' => ['email' => $email]] pour une valeur préparée."
     },
     {
-      "id": "piephp-215",
-      "category": "bug",
-      "file": "src/routes.php",
-      "question": "Router::connect('/films', ['controller' => 'film', 'action' => 'list']); FilmController n'a pas listAction(). Résultat ?",
-      "choices": [
-        "FilmController::indexAction()",
-        "Une page 404",
-        "Le routage automatique est tenté",
-        "Une Fatal error"
-      ],
-      "answer": 1,
-      "explanation": "La route est trouvée, mais method_exists() échoue : le Core affiche la 404."
-    },
-    {
-      "id": "piephp-216",
-      "category": "bug",
-      "file": "src/View/Film/show.php",
-      "question": "Une vue écrit @if ($film) ... sans @endif. Que se passe-t-il ?",
-      "choices": [
-        "Erreur PHP « unexpected end of file »",
-        "Le texte « @if » s'affiche dans la page",
-        "Le moteur ajoute le @endif tout seul",
-        "Le contenu du @if est ignoré"
-      ],
-      "answer": 0,
-      "explanation": "Chaque bloc ouvert doit être refermé dans le PHP compilé."
-    },
-    {
       "id": "piephp-217",
       "category": "bug",
       "file": "src/Model/UserModel.php",
@@ -3150,76 +1816,6 @@
       "explanation": "Une méthode protected de la classe mère doit rester protected ou public dans la fille."
     },
     {
-      "id": "piephp-218",
-      "category": "scenario",
-      "file": "Core/Core.php",
-      "question": "Que se passe-t-il avec l'URL /PiePHP/articles?exemple=42 ?",
-      "choices": [
-        "AppController::indexAction() s'affiche",
-        "$_GET est vide car QSA est absent",
-        "Apache renvoie sa propre erreur 404",
-        "404 : ArticlesController n'existe pas"
-      ],
-      "answer": 3,
-      "explanation": "Le .htaccess l'envoie à index.php ($_GET['exemple'] = '42'), mais aucun controller ne correspond."
-    },
-    {
-      "id": "piephp-219",
-      "category": "scenario",
-      "file": "Core/Core.php",
-      "question": "Que se passe-t-il avec l'URL /user/ADD ?",
-      "choices": [
-        "ADDAction() est créée",
-        "Une Fatal error s'affiche",
-        "addAction() est appelée",
-        "Une page 404 s'affiche"
-      ],
-      "answer": 2,
-      "explanation": "En PHP, les noms de méthodes sont insensibles à la casse : method_exists() trouve addAction()."
-    },
-    {
-      "id": "piephp-220",
-      "category": "scenario",
-      "file": "Core/Core.php",
-      "question": "Que se passe-t-il avec l'URL /?c[]=user ?",
-      "choices": [
-        "Une page 404",
-        "UserController s'affiche",
-        "Une Fatal error s'affiche",
-        "L'accueil s'affiche"
-      ],
-      "answer": 0,
-      "explanation": "$_GET['c'] est un tableau : isValidName() le refuse grâce à is_string()."
-    },
-    {
-      "id": "piephp-221",
-      "category": "scenario",
-      "file": "Core/Entity.php",
-      "question": "On fait new UserModel(['id' => 999]) et l'id 999 n'existe pas. Que vaut $user->id ?",
-      "choices": [
-        "null",
-        "0",
-        "false",
-        "999"
-      ],
-      "answer": 0,
-      "explanation": "read() renvoie null, remplacé par [] : l'entité reste vide."
-    },
-    {
-      "id": "piephp-222",
-      "category": "scenario",
-      "file": "Core/Entity.php",
-      "question": "On charge un utilisateur puis on appelle save() sans rien modifier. Combien de requêtes SQL ?",
-      "choices": [
-        "Un SELECT",
-        "Un UPDATE",
-        "Un INSERT",
-        "Aucune"
-      ],
-      "answer": 3,
-      "explanation": "save() ne trouve aucune colonne modifiée par rapport à $this->original."
-    },
-    {
       "id": "piephp-223",
       "category": "scenario",
       "file": "Core/TemplateEngine.php",
@@ -3232,76 +1828,6 @@
       ],
       "answer": 1,
       "explanation": "Les chevrons sont transformés en entités HTML : ils s'affichent au lieu d'être interprétés."
-    },
-    {
-      "id": "piephp-224",
-      "category": "scenario",
-      "file": "Core/Controller.php",
-      "question": "Une action appelle render('a') puis render('b'). Qu'est-ce qui s'affiche ?",
-      "choices": [
-        "La vue a, puis la vue b",
-        "Les vues a puis b",
-        "Seulement la vue a",
-        "Seulement la vue b"
-      ],
-      "answer": 3,
-      "explanation": "Le second appel remplace self::$render ; rien n'est affiché avant __destruct()."
-    },
-    {
-      "id": "piephp-225",
-      "category": "scenario",
-      "file": "src/Controller/GenreController.php",
-      "question": "Un visiteur connecté ouvre le lien /genre/delete?id=1 (en GET). Que se passe-t-il ?",
-      "choices": [
-        "Le genre 1 est supprimé",
-        "Redirection vers /genre, rien n'est supprimé",
-        "Une page de confirmation s'affiche",
-        "Le genre 1 est supprimé sans confirmation"
-      ],
-      "answer": 1,
-      "explanation": "deleteAction() n'agit qu'en POST."
-    },
-    {
-      "id": "piephp-226",
-      "category": "scenario",
-      "file": "src/Controller/FilmController.php",
-      "question": "Un visiteur non connecté envoie un POST vers /film/delete?id=1. Résultat ?",
-      "choices": [
-        "Le formulaire de film s'affiche",
-        "Redirection vers /user/login avec un message",
-        "Le film est supprimé quand même",
-        "Une page 403 Forbidden renvoyée par le Core"
-      ],
-      "answer": 1,
-      "explanation": "requireLogin() arrête l'action avant toute suppression."
-    },
-    {
-      "id": "piephp-227",
-      "category": "frameworks",
-      "file": "Core/TemplateEngine.php",
-      "question": "Quel moteur de templates a inspiré celui de PiePHP ?",
-      "choices": [
-        "Smarty (PHP)",
-        "Mustache",
-        "Blade (Laravel)",
-        "Twig (Symfony)"
-      ],
-      "answer": 2,
-      "explanation": "Le sujet renvoie à la documentation de Blade."
-    },
-    {
-      "id": "piephp-228",
-      "category": "frameworks",
-      "file": "Core/ORM.php",
-      "question": "Quel est l'ORM de Laravel ?",
-      "choices": [
-        "Eloquent",
-        "Propel",
-        "Doctrine",
-        "Hibernate"
-      ],
-      "answer": 0,
-      "explanation": "Doctrine est celui de Symfony."
     },
     {
       "id": "piephp-229",
@@ -3332,216 +1858,6 @@
       "explanation": "Composer l'implémente. Ton autoloader en suit l'idée pour Core\\, plus une recherche dans src/."
     },
     {
-      "id": "piephp-231",
-      "category": "frameworks",
-      "file": "Core/Controller.php",
-      "question": "Dans Laravel, qu'est-ce qu'un middleware ?",
-      "choices": [
-        "Un filtre autour de l'action",
-        "Un moteur de templates pour les mails",
-        "Une classe placée entre le model et la base",
-        "Un fichier de configuration du routeur"
-      ],
-      "answer": 0,
-      "explanation": "Le middleware auth de Laravel joue le rôle de requireLogin() dans PiePHP."
-    },
-    {
-      "id": "piephp-232",
-      "category": "frameworks",
-      "file": "src/routes.php",
-      "question": "Comment Laravel écrit-il la route dynamique d'un film ?",
-      "choices": [
-        "Router::connect('/film/:id')",
-        "Route::get('/film?id=')",
-        "Route::get('/film/{id?}/show')",
-        "Route::get('/film/{id}', ...)"
-      ],
-      "answer": 3,
-      "explanation": "Le {id} est passé en argument à l'action du controller."
-    },
-    {
-      "id": "piephp-233",
-      "category": "frameworks",
-      "file": "database.sql",
-      "question": "Quel est l'équivalent Laravel de ton fichier database.sql ?",
-      "choices": [
-        "Les factories",
-        "Les seeders",
-        "Les contrôleurs de ressources",
-        "Les migrations (fichiers PHP versionnés qui créent les tables)"
-      ],
-      "answer": 3,
-      "explanation": "Des fichiers PHP versionnés qui créent et modifient les tables. Les seeders, eux, remplissent les données."
-    },
-    {
-      "id": "piephp-234",
-      "category": "frameworks",
-      "file": "src/View/Film/form.php",
-      "question": "Comment Laravel protège-t-il un formulaire contre le CSRF ?",
-      "choices": [
-        "Avec @csrf, un jeton caché",
-        "Avec {{ }} sur chaque champ",
-        "Avec la règle required",
-        "Avec @method('POST')"
-      ],
-      "answer": 0,
-      "explanation": "Le serveur refuse un POST sans le bon jeton. PiePHP ne le fait pas."
-    },
-    {
-      "id": "piephp-235",
-      "category": "tests",
-      "file": "tests/run.php",
-      "question": "Comment lance-t-on les tests de PiePHP ?",
-      "choices": [
-        "phpunit tests/",
-        "php tests/run.php",
-        "composer test",
-        "php -l tests/"
-      ],
-      "answer": 1,
-      "explanation": "Le lanceur trouve tout seul les fichiers tests/*Test.php."
-    },
-    {
-      "id": "piephp-236",
-      "category": "tests",
-      "file": "tests/run.php",
-      "question": "Pourquoi tests/run.php se termine-t-il par exit(0) ou exit(1) ?",
-      "choices": [
-        "Pour relancer les tests qui ont échoué",
-        "Pour vider le cache des vues compilées",
-        "La CI lit ce code pour afficher vert ou rouge",
-        "Pour fermer la base de test en mémoire"
-      ],
-      "answer": 2,
-      "explanation": "0 = tout passe, 1 = au moins un échec."
-    },
-    {
-      "id": "piephp-237",
-      "category": "tests",
-      "file": "tests/TestDatabase.php",
-      "question": "Quelle base les tests utilisent-ils ?",
-      "choices": [
-        "Une base MySQL de test",
-        "SQLite en mémoire",
-        "Des données en JSON",
-        "La base MySQL piephp"
-      ],
-      "answer": 1,
-      "explanation": "Grâce à PDO, seul le DSN change."
-    },
-    {
-      "id": "piephp-238",
-      "category": "tests",
-      "file": ".github/workflows/piephp-strict-ci.yml",
-      "question": "Quels sont les 4 jobs de la CI de PiePHP ?",
-      "choices": [
-        "Lint, Docker, migrations, tests",
-        "Build, lint, deploy, release",
-        "Structure, lint, PSR-12, tests",
-        "Install, test, coverage, deploy"
-      ],
-      "answer": 2,
-      "explanation": "À chaque push et pull request."
-    },
-    {
-      "id": "piephp-239",
-      "category": "tests",
-      "file": ".github/workflows/piephp-strict-ci.yml",
-      "question": "Que vérifie la commande php -l ?",
-      "choices": [
-        "Le respect de la norme PSR-12",
-        "La syntaxe PHP du fichier, sans exécuter une seule ligne de son code",
-        "Le respect de la norme PSR-12 dans le fichier",
-        "Les liens entre les classes du projet"
-      ],
-      "answer": 1,
-      "explanation": "-l comme lint."
-    },
-    {
-      "id": "piephp-240",
-      "category": "tests",
-      "file": ".github/workflows/release.yml",
-      "question": "Qu'est-ce qui déclenche le workflow Release ?",
-      "choices": [
-        "Un horaire chaque semaine",
-        "Chaque push sur la branche main",
-        "L'ouverture d'une pull request",
-        "Le push d'un tag de version"
-      ],
-      "answer": 3,
-      "explanation": "Le tag doit correspondre au fichier VERSION ; les notes viennent du CHANGELOG."
-    },
-    {
-      "id": "piephp-241",
-      "category": "tests",
-      "file": "CHANGELOG.md",
-      "question": "Dans la version 1.0.0, que représentent les trois nombres ?",
-      "choices": [
-        "VERSION.BUILD.COMMIT",
-        "MAJEUR.MINEUR.CORRECTIF",
-        "MINEUR.MAJEUR.CORRECTIF",
-        "MAJEUR.CORRECTIF.MINEUR"
-      ],
-      "answer": 1,
-      "explanation": "Le versionnage sémantique."
-    },
-    {
-      "id": "piephp-242",
-      "category": "syntaxe",
-      "file": "Core/Router.php",
-      "question": "Que renvoie $a ?? 'défaut' ?",
-      "choices": [
-        "$a s'il n'est pas null, sinon 'défaut'",
-        "'défaut' s'il est vrai, sinon $a",
-        "$a s'il est vrai, sinon 'défaut'",
-        "true si $a vaut 'défaut'"
-      ],
-      "answer": 0,
-      "explanation": "L'opérateur null coalescing, sans warning si $a n'existe pas."
-    },
-    {
-      "id": "piephp-243",
-      "category": "syntaxe",
-      "file": "Core/ORM.php",
-      "question": "Qu'est-ce que fn ($row) => $row['id'] ?",
-      "choices": [
-        "Une constante",
-        "Une fonction nommée fn",
-        "Une méthode statique",
-        "Une fonction fléchée"
-      ],
-      "answer": 3,
-      "explanation": "Une fonction anonyme d'une seule expression, qui voit les variables d'autour (PHP 7.4+)."
-    },
-    {
-      "id": "piephp-244",
-      "category": "syntaxe",
-      "file": "Core/Entity.php",
-      "question": "Que fait [$type, $name] = parseRelation($phrase); ?",
-      "choices": [
-        "Crée un tableau qui contient $type et $name",
-        "Appelle parseRelation sur $type puis $name",
-        "Elle range la 1re case du tableau dans $type et la 2e dans $name",
-        "Crée un tableau à deux cases qui contient $type et $name"
-      ],
-      "answer": 2,
-      "explanation": "C'est la déstructuration, équivalent de list()."
-    },
-    {
-      "id": "piephp-245",
-      "category": "syntaxe",
-      "file": "src/Controller/FilmController.php",
-      "question": "Que signifie catch (PDOException | RuntimeException $e) ?",
-      "choices": [
-        "Un catch qui relance la seconde exception",
-        "Un catch qui ne s'exécute que si les deux exceptions arrivent",
-        "Un catch pour une exception des deux types",
-        "Un seul catch pour deux types d'exceptions"
-      ],
-      "answer": 3,
-      "explanation": "Syntaxe disponible depuis PHP 7.1."
-    },
-    {
       "id": "piephp-246",
       "category": "syntaxe",
       "file": "src/Controller/AppController.php",
@@ -3556,20 +1872,6 @@
       "explanation": "« Controller » désigne alors Core\\Controller. C'est l'autoloader qui chargera le fichier."
     },
     {
-      "id": "piephp-247",
-      "category": "syntaxe",
-      "file": "Core/Controller.php",
-      "question": "Que signifie le type de retour ?int ?",
-      "choices": [
-        "Un entier facultatif",
-        "Un entier ou null",
-        "Un entier positif",
-        "Un entier ou false"
-      ],
-      "answer": 1,
-      "explanation": "Le « ? » rend le type nullable."
-    },
-    {
       "id": "piephp-248",
       "category": "syntaxe",
       "file": "Core/Controller.php",
@@ -3582,20 +1884,6 @@
       ],
       "answer": 2,
       "explanation": "public est visible partout."
-    },
-    {
-      "id": "piephp-249",
-      "category": "syntaxe",
-      "file": "Core/Entity.php",
-      "question": "Que fait $this->$name = $value; ?",
-      "choices": [
-        "Écrit l'attribut dont le nom est dans $name",
-        "Écrit l'attribut nommé « name »",
-        "Écrit l'attribut public qui s'appelle « name »",
-        "Crée une variable locale $name"
-      ],
-      "answer": 0,
-      "explanation": "Avec $name = 'email', c'est $this->email = $value."
     },
     {
       "id": "piephp-250",
@@ -3624,20 +1912,6 @@
       ],
       "answer": 1,
       "explanation": "include, lui, ne fait qu'un warning si le fichier manque."
-    },
-    {
-      "id": "piephp-252",
-      "category": "syntaxe",
-      "file": "Core/Controller.php",
-      "question": "Que vaut __CLASS__ dans la classe Core\\Core ?",
-      "choices": [
-        "'Core\\Core.php'",
-        "'Core.php'",
-        "'Core/Core'",
-        "'Core\\Core'"
-      ],
-      "answer": 3,
-      "explanation": "Le nom complet de la classe où il est écrit, namespace compris."
     }
   ]
 }

@@ -9,6 +9,23 @@ les numéros de version suivent le [versionnage sémantique](https://semver.org/
 
 ## [Non publié]
 
+## [0.2.1]
+
+### Corrigé
+- Les boutons « Signaler une erreur » et « Contacter l'auteur » ne réagissaient
+  pas en ligne : le navigateur gardait l'ancien `js/app.js` en cache. Les
+  fichiers CSS et JS sont maintenant versionnés (`?v=0.2.1`).
+
+### Modifié
+- Questions PiePHP recentrées sur ce qui tombe en soutenance : 129 questions
+  au lieu de 252. Gardées : le rôle de chaque fichier, le cheminement d'une
+  requête, MVC, .htaccess, PDO et SQL, ORM et relations, principes de POO,
+  sécurité. Retirées : les tests et la CI, les comparaisons avec Laravel, la
+  syntaxe hors POO et les détails secondaires des controllers et des vues.
+- Pied de page : « Une erreur ou une idée ? Contacter l'auteur », lien discret
+  de la même taille que le texte.
+- Ajout de `.nojekyll` : GitHub Pages sert les fichiers tels quels.
+
 ## [0.2.0]
 
 ### Ajouté
