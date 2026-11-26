@@ -9,6 +9,18 @@ les numéros de version suivent le [versionnage sémantique](https://semver.org/
 
 ## [Non publié]
 
+## [0.2.1]
+
+### Corrigé
+- Les boutons « Signaler une erreur » et « Contacter l'auteur » ne réagissaient
+  pas en ligne : le navigateur gardait l'ancien `js/app.js` en cache. Les
+  fichiers CSS et JS sont maintenant versionnés (`?v=0.2.1`).
+
+### Modifié
+- Pied de page : « Une erreur ou une idée ? Contacter l'auteur », lien discret
+  de la même taille que le texte.
+- Ajout de `.nojekyll` : GitHub Pages sert les fichiers tels quels.
+
 ## [0.2.0]
 
 ### Ajouté
@@ -24,7 +36,6 @@ les numéros de version suivent le [versionnage sémantique](https://semver.org/
 - Les meilleurs scores sont rangés sous `pts-best:` au lieu de `rtp-best:`
   (ancien nom du projet) ; les scores déjà enregistrés sont repris.
 - Les raccourcis clavier du quiz sont désactivés pendant la saisie d'un message.
-- Les fichiers CSS et JS sont versionnés (`?v=0.2.0`) pour que le navigateur ne garde pas l'ancienne version en cache.
 - Le projet s'appelle désormais PrepareTaSoutenance (titre, en-tête, slogan,
   README). Nouvelle adresse du site :
   https://vincentlesniak.github.io/PrepareTaSoutenance/.
