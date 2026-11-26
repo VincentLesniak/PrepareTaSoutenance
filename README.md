@@ -154,7 +154,7 @@ l'alias aléatoire que FormSubmit fournit à l'activation :
    note l'alias aléatoire qu'il indique.
 3. Mets `https://formsubmit.co/ajax/<alias>` dans `endpoint`.
 
-Tant que `endpoint` est vide, le formulaire s'affiche mais indique que l'envoi
+Le site utilise déjà un alias activé. Tant que `endpoint` est vide, le formulaire s'affiche mais indique que l'envoi
 n'est pas configuré et renvoie vers `fallbackUrl`.
 
 **Limite d'envoi.** Le navigateur accepte au plus un message toutes les
