@@ -3,7 +3,8 @@
  *
  * Données :
  *   data/projects.json      la liste des projets (id, titre, fichier) ;
- *   data/<projet>.json      les catégories et les questions d'un projet.
+ *   data/<projet>.json      les catégories et les questions d'un projet ;
+ *   data/site.json          les réglages du site (adresse du formulaire de contact).
  * Ajouter un projet = ajouter son fichier JSON et une ligne dans
  * projects.json, sans toucher à ce code.
  *
@@ -23,6 +24,8 @@
         score: 0,
         answered: false,
         mistakes: [],
+        contactEndpoint: '',
+        contactFallback: '',
     };
 
     const $ = (id) => document.getElementById(id);
@@ -68,6 +71,8 @@
     // ------------------------------------------------------------------ accueil
 
     async function init() {
+        migrateOldScores();
+        loadSiteSettings();
         try {
             const data = await fetchJson('data/projects.json');
             state.projects = data.projects;
@@ -127,7 +132,25 @@
     }
 
     function bestScoreKey() {
-        return `rtp-best:${state.project.id}:${$('category-select').value}`;
+        return `pts-best:${state.project.id}:${$('category-select').value}`;
+    }
+
+    // Avant la 0.2.0, les scores étaient rangés sous « rtp-best:… » (ancien nom
+    // du projet). On les recopie une fois sous la nouvelle clé.
+    function migrateOldScores() {
+        try {
+            const storage = window.localStorage;
+            for (let i = storage.length - 1; i >= 0; i--) {
+                const oldKey = storage.key(i);
+                if (oldKey && oldKey.startsWith('rtp-best:')) {
+                    const newKey = 'pts-best:' + oldKey.slice('rtp-best:'.length);
+                    if (storage.getItem(newKey) === null) {
+                        storage.setItem(newKey, storage.getItem(oldKey));
+                    }
+                    storage.removeItem(oldKey);
+                }
+            }
+        } catch (e) { /* stockage indisponible : rien à migrer */ }
     }
 
     function updateBestScore() {
@@ -292,6 +315,113 @@
         show('result');
     }
 
+    // ------------------------------------------------------------------ contact
+
+    // Le site est statique : il ne peut pas envoyer de mail lui-même. Le
+    // formulaire est envoyé à un service externe (Formspree, par exemple)
+    // qui transfère le message par mail. Son adresse est dans data/site.json.
+    async function loadSiteSettings() {
+        try {
+            const site = await fetchJson('data/site.json');
+            state.contactEndpoint = (site.contact && site.contact.endpoint) || '';
+            state.contactFallback = (site.contact && site.contact.fallbackUrl) || '';
+        } catch (e) { /* pas de réglages : le formulaire affichera une solution de repli */ }
+    }
+
+    function setContactStatus(kind, message) {
+        const el = $('contact-status');
+        el.className = 'status ' + kind;
+        el.textContent = message;
+        el.hidden = !message;
+    }
+
+    function openContact(question) {
+        const form = $('contact-form');
+        form.reset();
+        setContactStatus('', '');
+        $('contact-submit').disabled = false;
+        $('contact-submit').hidden = false;
+        $('contact-cancel').textContent = 'Annuler';
+
+        const info = $('contact-question-info');
+        if (question) {
+            const label = `${state.project.title} · ${question.id} : ${question.question}`;
+            $('contact-question').value = label;
+            info.textContent = `Question concernée : ${label}`;
+            $('contact-subject').value = 'Erreur dans une question';
+        } else {
+            $('contact-question').value = '';
+            info.textContent = '';
+        }
+        info.hidden = !question;
+
+        const dialog = $('contact-dialog');
+        if (typeof dialog.showModal === 'function') {
+            dialog.showModal();
+        } else {
+            dialog.setAttribute('open', '');
+        }
+        $('contact-message').focus();
+    }
+
+    function closeContact() {
+        const dialog = $('contact-dialog');
+        if (typeof dialog.close === 'function') {
+            dialog.close();
+        } else {
+            dialog.removeAttribute('open');
+        }
+    }
+
+    async function sendContact(event) {
+        event.preventDefault();
+        const form = $('contact-form');
+        const message = $('contact-message');
+        const email = $('contact-email');
+        if (!message.value.trim()) {
+            setContactStatus('bad', 'Écris ton message avant d\'envoyer.');
+            message.focus();
+            return;
+        }
+        if (!email.checkValidity()) {
+            setContactStatus('bad', 'Cette adresse e-mail n\'est pas valide.');
+            email.focus();
+            return;
+        }
+        if (!state.contactEndpoint) {
+            setContactStatus('bad', 'L\'envoi n\'est pas encore configuré. '
+                + (state.contactFallback ? `Écris-moi sur ${state.contactFallback}` : ''));
+            return;
+        }
+
+        const data = new FormData(form);
+        data.append('_subject', `[PrepareTaSoutenance] ${data.get('sujet')}`);
+        data.append('page', window.location.href);
+        if (data.get('email')) {
+            data.append('_replyto', data.get('email'));
+        }
+
+        const submit = $('contact-submit');
+        submit.disabled = true;
+        setContactStatus('', 'Envoi en cours…');
+        try {
+            const response = await fetch(state.contactEndpoint, {
+                method: 'POST',
+                body: data,
+                headers: { Accept: 'application/json' },
+            });
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status}`);
+            }
+            setContactStatus('good', 'Merci, ton message est envoyé !');
+            submit.hidden = true;
+            $('contact-cancel').textContent = 'Fermer';
+        } catch (e) {
+            submit.disabled = false;
+            setContactStatus('bad', 'L\'envoi a échoué. Vérifie ta connexion et réessaie.');
+        }
+    }
+
     // ------------------------------------------------------------------ événements
 
     $('setup-form').addEventListener('submit', startFromSettings);
@@ -299,9 +429,16 @@
     $('quit-button').addEventListener('click', () => { updateBestScore(); show('home'); });
     $('restart-button').addEventListener('click', () => { updateBestScore(); show('home'); });
     $('retry-wrong-button').addEventListener('click', () => startQuiz(shuffle(state.mistakes)));
+    $('contact-open').addEventListener('click', () => openContact(null));
+    $('report-button').addEventListener('click', () => openContact(state.queue[state.index]));
+    $('contact-close').addEventListener('click', closeContact);
+    $('contact-cancel').addEventListener('click', closeContact);
+    $('contact-form').addEventListener('submit', sendContact);
 
     document.addEventListener('keydown', (event) => {
-        if (screens.quiz.hidden || event.altKey || event.ctrlKey || event.metaKey) {
+        // Pas de raccourci pendant qu'on écrit dans le formulaire de contact.
+        if (screens.quiz.hidden || $('contact-dialog').open
+            || event.altKey || event.ctrlKey || event.metaKey) {
             return;
         }
         const position = LETTERS.indexOf(event.key);
@@ -310,7 +447,9 @@
             if (button) {
                 button.click();
             }
-        } else if (event.key === 'Enter' && state.answered && document.activeElement !== $('next-button')) {
+        } else if (event.key === 'Enter' && state.answered
+            && !(document.activeElement && document.activeElement.tagName === 'BUTTON')) {
+            // Un bouton qui a le focus gère déjà Entrée lui-même (Suivante, Signaler…).
             nextQuestion();
         }
     });

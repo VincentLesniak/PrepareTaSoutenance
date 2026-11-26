@@ -155,14 +155,64 @@ button.ghost { background: transparent; }
 .mistakes .answer { color: var(--good); font-weight: 600; }
 
 .footer { max-width: 760px; margin: 0 auto; padding: 0 16px 32px; font-size: 0.85rem; }
-.footer p { margin: 0 0 8px; }
-.footer a { color: var(--muted); text-decoration: underline; text-underline-offset: 2px; }
-.footer a:hover { color: var(--accent); }
-.footer .author { display: inline-flex; align-items: center; gap: 4px; vertical-align: bottom; font-weight: 600; text-decoration: none; }
-.footer .icon { flex: none; }
+.footer p { margin: 0; }
+
+.link-button {
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--accent);
+    font: inherit;
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    cursor: pointer;
+}
+.link-button:hover:not(:disabled) { text-decoration-thickness: 2px; }
+.link-button:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+.feedback .report { margin-top: 10px; font-size: 0.85rem; font-weight: 400; color: var(--muted); }
+
+.dialog {
+    width: min(560px, calc(100% - 32px));
+    max-height: calc(100% - 32px);
+    padding: 0;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+    color: var(--text);
+}
+.dialog::backdrop { background: rgba(10, 12, 18, 0.55); }
+.contact-form { padding: 20px 24px 24px; }
+.dialog-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+.dialog-head h2 { margin: 4px 0 8px; }
+.dialog .close { flex: none; padding: 4px 10px; }
+.pill-block {
+    margin: 4px 0 0;
+    padding: 8px 12px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 0.85rem;
+    overflow-wrap: anywhere;
+}
+textarea, input[type="email"] {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--surface);
+    color: var(--text);
+    font: inherit;
+}
+textarea { resize: vertical; min-height: 110px; }
+textarea:focus-visible, input:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.honeypot { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+.status { margin: 16px 0 0; padding: 10px 12px; border-radius: 8px; }
+.status.good { color: var(--good); background: var(--good-bg); }
+.status.bad { color: var(--bad); background: var(--bad-bg); }
 
 @media (max-width: 480px) {
     .card { padding: 16px; }
     .tagline { display: none; }
     .actions button { flex: 1 1 auto; }
+    .contact-form { padding: 16px; }
 }

@@ -30,6 +30,7 @@ PrepareTaSoutenance/
 ├── js/app.js                   La logique du quiz
 ├── data/
 │   ├── projects.json           La liste des projets à réviser
+│   ├── site.json               Les réglages du site (formulaire de contact)
 │   └── piephp.json             Les 252 questions de PiePHP
 ├── scripts/
 │   └── validate-questions.mjs  Vérifie les fichiers de questions
@@ -115,6 +116,34 @@ Le quiz ne connaît aucun projet à l'avance : tout est dans `data/`.
   réponse dépend d'un réglage de `php.ini` (comme `output_buffering`).
 
 Astuce : `https://<site>/#monprojet` ouvre directement le quiz sur ce projet.
+
+## Formulaire de contact
+
+Le bouton « Écris-moi » du pied de page et le lien « Signaler une erreur sur
+cette question » ouvrent un formulaire. GitHub Pages ne peut pas envoyer de
+mail : le formulaire est envoyé à [Formspree](https://formspree.io), un
+service gratuit (50 messages par mois) qui transfère chaque message par mail.
+L'adresse de réception reste chez Formspree, elle n'apparaît jamais dans le
+code du site.
+
+Mise en place, une seule fois :
+
+1. Crée un compte sur https://formspree.io avec l'adresse qui doit recevoir
+   les messages, puis crée un formulaire (« New form »).
+2. Copie son adresse, de la forme `https://formspree.io/f/abcdwxyz`.
+3. Colle-la dans `data/site.json` :
+
+   ```json
+   { "contact": { "endpoint": "https://formspree.io/f/abcdwxyz", "fallbackUrl": "https://github.com/VincentLesniak" } }
+   ```
+
+4. Envoie un premier message depuis le site et confirme-le dans le mail de
+   Formspree.
+
+Tant que `endpoint` est vide, le formulaire s'affiche mais indique que l'envoi
+n'est pas configuré et renvoie vers `fallbackUrl`. Le mail reçu contient le
+sujet, le message, l'e-mail de la personne (facultatif) et, pour un
+signalement, l'identifiant et le texte de la question.
 
 ## Déploiement sur GitHub Pages
 
