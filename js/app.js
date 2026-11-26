@@ -1,5 +1,5 @@
 /*
- * ReviseTonProjet : le quiz, en JavaScript sans dépendance.
+ * PrepareTaSoutenance : le quiz, en JavaScript sans dépendance.
  *
  * Données :
  *   data/projects.json      la liste des projets (id, titre, fichier) ;

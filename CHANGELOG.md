@@ -1,6 +1,6 @@
 # Journal des modifications (CHANGELOG)
 
-Toutes les évolutions notables de ReviseTonProjet sont listées ici, de la
+Toutes les évolutions notables de PrepareTaSoutenance sont listées ici, de la
 plus récente à la plus ancienne.
 
 Le format suit [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/) et
@@ -8,6 +8,11 @@ les numéros de version suivent le [versionnage sémantique](https://semver.org/
 (MAJEUR.MINEUR.CORRECTIF).
 
 ## [Non publié]
+
+### Modifié
+- Le projet s'appelle désormais PrepareTaSoutenance (titre, en-tête, README).
+  Nouvelle adresse du site : https://vincentlesniak.github.io/PrepareTaSoutenance/.
+- Pied de page : lien vers le GitHub de l'auteur au lieu de la consigne de pull request.
 
 ## [0.1.1]
 

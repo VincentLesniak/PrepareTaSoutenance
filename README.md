@@ -1,4 +1,4 @@
-# ReviseTonProjet
+# PrepareTaSoutenance
 
 Application ayant pour objectif de t'aider à réviser ta soutenance à venir.
 
@@ -24,7 +24,7 @@ navigateur, et un workflow GitHub Actions publie les fichiers sur Pages.
 ## Arborescence
 
 ```
-ReviseTonProjet/
+PrepareTaSoutenance/
 ├── index.html                  La page unique du quiz
 ├── css/style.css               Le style (thème clair et sombre)
 ├── js/app.js                   La logique du quiz
@@ -133,7 +133,7 @@ Le workflow `.github/workflows/deploy-pages.yml` :
    `main`, a le droit de déployer).
 
 Le site est ensuite visible à l'adresse
-https://vincentlesniak.github.io/ReviseTonProjet/.
+https://vincentlesniak.github.io/PrepareTaSoutenance/.
 
 ## Branches
 
