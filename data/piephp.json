@@ -1293,34 +1293,6 @@
       "explanation": "-f teste l'existence d'un fichier, ! inverse le test."
     },
     {
-      "id": "piephp-059",
-      "category": "htaccess",
-      "file": ".htaccess",
-      "question": "Que fait le flag [OR] entre les deux RewriteCond ?",
-      "choices": [
-        "Il les relie par un OU au lieu d'un ET",
-        "Il ignore la condition si elle échoue",
-        "Il arrête la lecture des conditions suivantes",
-        "Il rend la condition insensible à la casse"
-      ],
-      "answer": 0,
-      "explanation": "On réécrit si le fichier n'existe pas OU s'il n'est pas dans la liste blanche."
-    },
-    {
-      "id": "piephp-060",
-      "category": "htaccess",
-      "file": ".htaccess",
-      "question": "Que fait le flag QSA de la RewriteRule ?",
-      "choices": [
-        "Il envoie un code de redirection 301 au navigateur",
-        "Il met l'URL réécrite en minuscules",
-        "Il garde la query string (?a=1)",
-        "Il envoie un code de redirection 301"
-      ],
-      "answer": 2,
-      "explanation": "Query String Append : sans lui, $_GET serait vide après réécriture."
-    },
-    {
       "id": "piephp-061",
       "category": "htaccess",
       "file": ".htaccess",
@@ -1333,20 +1305,6 @@
       ],
       "answer": 0,
       "explanation": "L comme Last."
-    },
-    {
-      "id": "piephp-062",
-      "category": "htaccess",
-      "file": ".htaccess",
-      "question": "Pourquoi la liste blanche contient webroot/.+ et pas webroot/ ?",
-      "choices": [
-        "Pour accepter les noms de fichiers en majuscules",
-        "Pour refuser « webroot/ » seul, qui listerait le dossier",
-        "Pour autoriser aussi les fichiers cachés de webroot",
-        "Pour autoriser les fichiers cachés comme webroot/.htaccess"
-      ],
-      "answer": 1,
-      "explanation": "« .+ » exige au moins un caractère après webroot/."
     },
     {
       "id": "piephp-064",
@@ -1531,20 +1489,6 @@
       "explanation": "Le Router ne fait que des correspondances exactes. /film/show?id=3 est la solution du projet."
     },
     {
-      "id": "piephp-087",
-      "category": "router",
-      "file": "Core/Router.php",
-      "question": "Comment pourrait-on ajouter les routes dynamiques au Router ?",
-      "choices": [
-        "Appeler Router::connect() pour chaque id existant",
-        "Ajouter une règle par id dans le fichier .htaccess",
-        "Transformer {id} en regex et tester avec preg_match()",
-        "Remplacer le tableau $routes par une table SQL routes"
-      ],
-      "answer": 2,
-      "explanation": "Par exemple /film/{id} → #^/film/(\\d+)$#, puis le groupe capturé devient le paramètre de l'action."
-    },
-    {
       "id": "piephp-089",
       "category": "controller",
       "file": "Core/Controller.php",
@@ -1599,34 +1543,6 @@
       ],
       "answer": 1,
       "explanation": "« N'existe-t-il pas l'inverse de __construct ? »"
-    },
-    {
-      "id": "piephp-093",
-      "category": "controller",
-      "file": "Core/Controller.php",
-      "question": "Que fait extract($scope, EXTR_SKIP) ?",
-      "choices": [
-        "Échappe chaque valeur du tableau pour la vue",
-        "Crée une variable par clé et échappe chaque valeur pour la vue",
-        "Une variable par clé, sans écrasement",
-        "Crée une variable par clé, en écrasant l'existant"
-      ],
-      "answer": 2,
-      "explanation": "['email' => 'a@b.c'] crée $email. EXTR_SKIP protège $file et $scope."
-    },
-    {
-      "id": "piephp-094",
-      "category": "controller",
-      "file": "Core/Controller.php",
-      "question": "À quoi servent ob_start() et ob_get_clean() ?",
-      "choices": [
-        "À ouvrir puis fermer la session du visiteur",
-        "À récupérer en chaîne ce qu'affiche un fichier",
-        "À vider le cache des vues compilées",
-        "À compresser la page avant de l'envoyer"
-      ],
-      "answer": 1,
-      "explanation": "Output buffering : les echo vont dans un tampon au lieu de partir au navigateur."
     },
     {
       "id": "piephp-097",
@@ -1741,20 +1657,6 @@
       "explanation": "Une même action affiche le formulaire en GET et le traite en POST."
     },
     {
-      "id": "piephp-113",
-      "category": "request",
-      "file": "Core/Request.php",
-      "question": "Pourquoi ne pas donner tout getQueryParams() à une entité ?",
-      "choices": [
-        "L'entité n'accepte que des tableaux à une seule clé",
-        "Un ?id=3 dans l'URL ferait charger puis modifier la ligne 3",
-        "getQueryParams() ne contient pas les champs POST",
-        "Les valeurs n'y sont pas encore nettoyées par Request"
-      ],
-      "answer": 1,
-      "explanation": "UserController ne transmet que email et password."
-    },
-    {
       "id": "piephp-114",
       "category": "database",
       "file": "Core/Database.php",
@@ -1825,20 +1727,6 @@
       "explanation": "Impossible de rater une requête qui échoue."
     },
     {
-      "id": "piephp-119",
-      "category": "database",
-      "file": "Core/Database.php",
-      "question": "Pourquoi régler PDO::ATTR_EMULATE_PREPARES à false ?",
-      "choices": [
-        "Pour garder les requêtes en cache côté PHP",
-        "Pour pouvoir utiliser la même config avec SQLite",
-        "Pour de vraies requêtes préparées côté MySQL",
-        "Pour accélérer les requêtes en les simulant"
-      ],
-      "answer": 2,
-      "explanation": "Sinon PHP simule la préparation en collant lui-même les valeurs."
-    },
-    {
       "id": "piephp-121",
       "category": "database",
       "file": ".gitignore",
@@ -1851,20 +1739,6 @@
       ],
       "answer": 0,
       "explanation": "Le .htaccess protège du navigateur, pas de Git."
-    },
-    {
-      "id": "piephp-124",
-      "category": "database",
-      "file": "Core/Database.php",
-      "question": "Que signifie charset=utf8mb4 dans le DSN ?",
-      "choices": [
-        "Un encodage limité aux accents français",
-        "Le vrai UTF-8 de MySQL, emojis compris",
-        "Une compression des textes sur 4 octets",
-        "Un chiffrement des colonnes de texte"
-      ],
-      "answer": 1,
-      "explanation": "L'« utf8 » historique de MySQL ne stocke pas tous les caractères."
     },
     {
       "id": "piephp-125",
@@ -2033,20 +1907,6 @@
       ],
       "answer": 0,
       "explanation": "Liaison statique tardive : self:: viserait Entity, la classe où le code est écrit."
-    },
-    {
-      "id": "piephp-147",
-      "category": "entity",
-      "file": "Core/Entity.php",
-      "question": "Qu'est-ce que « l'injection de dépendance » du constructeur d'Entity ?",
-      "choices": [
-        "Lui faire charger ses classes parentes",
-        "Lui faire charger automatiquement ses classes parentes",
-        "Lui donner sa connexion PDO de l'extérieur, au lieu qu'elle la choisisse seule",
-        "Lui faire exécuter du SQL à la création"
-      ],
-      "answer": 2,
-      "explanation": "Les tests lui passent une base SQLite en mémoire."
     },
     {
       "id": "piephp-151",
@@ -2357,20 +2217,6 @@
       "explanation": "Une sécurité de plus, au niveau de la base."
     },
     {
-      "id": "piephp-199",
-      "category": "sql",
-      "file": "database.sql",
-      "question": "Que fait INSERT IGNORE ?",
-      "choices": [
-        "Insère seulement si la table est vide",
-        "Insère sans vérifier les types des colonnes",
-        "Ignore les clés étrangères de la table",
-        "Saute les doublons"
-      ],
-      "answer": 3,
-      "explanation": "Utile pour réimporter le fichier sans erreur."
-    },
-    {
       "id": "piephp-200",
       "category": "sql",
       "file": "database.sql",
@@ -2497,34 +2343,6 @@
       "explanation": "Un autre site pourrait faire envoyer un POST à un membre connecté. Les frameworks ajoutent un jeton caché (@csrf dans Laravel)."
     },
     {
-      "id": "piephp-212",
-      "category": "bug",
-      "file": "Core/Controller.php",
-      "question": "Un controller définit __construct() { $this->x = 1; }. Que se passe-t-il ensuite ?",
-      "choices": [
-        "Rien, PHP appelle aussi le constructeur parent",
-        "La page 404 s'affiche pour ce controller",
-        "$this->request est null : getPost() plante",
-        "render() ne trouve plus le layout"
-      ],
-      "answer": 2,
-      "explanation": "Il faut appeler parent::__construct() en premier : c'est lui qui crée $this->request."
-    },
-    {
-      "id": "piephp-213",
-      "category": "bug",
-      "file": "Core/Entity.php",
-      "question": "Si getTable() utilisait self::class au lieu de static::class, que renverrait-elle ?",
-      "choices": [
-        "Une erreur de syntaxe dès le chargement",
-        "'users' uniquement pour UserModel",
-        "Une chaîne vide pour tous les models",
-        "'entitys' pour tous les models"
-      ],
-      "answer": 3,
-      "explanation": "self vise Entity, la classe où le code est écrit : Entity → « entity » + « s »."
-    },
-    {
       "id": "piephp-214",
       "category": "bug",
       "file": "src/Model/UserModel.php",
@@ -2537,20 +2355,6 @@
       ],
       "answer": 1,
       "explanation": "Il faut écrire ['WHERE' => ['email' => $email]] pour une valeur préparée."
-    },
-    {
-      "id": "piephp-217",
-      "category": "bug",
-      "file": "src/Model/UserModel.php",
-      "question": "Un model redéfinit prepareFields() en private. Que se passe-t-il ?",
-      "choices": [
-        "Entity appelle sa propre version et ignore celle du model",
-        "Elle devient automatiquement protected",
-        "Entity appelle sa propre version, sans erreur",
-        "Erreur fatale : une méthode redéfinie ne peut pas devenir moins visible"
-      ],
-      "answer": 3,
-      "explanation": "Une méthode protected de la classe mère doit rester protected ou public dans la fille."
     },
     {
       "id": "piephp-223",

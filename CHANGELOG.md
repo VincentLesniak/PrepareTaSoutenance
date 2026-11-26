@@ -19,6 +19,12 @@ les numéros de version suivent le [versionnage sémantique](https://semver.org/
 - 6 questions de compréhension remises (objectif de My cinema, Request,
   isPost(), relation de GenreModel, déconnexion, `<?= ?>`).
 
+### Retiré
+- 14 questions trop pointues pour un développeur en formation : flags [OR]
+  et QSA, `webroot/.+`, EMULATE_PREPARES, utf8mb4, EXTR_SKIP, ob_start,
+  INSERT IGNORE, injection de dépendance, getQueryParams() et entité, routes
+  dynamiques avec preg_match, et trois « trouve le bug » de POO avancée.
+
 ## [0.2.1]
 
 ### Corrigé
