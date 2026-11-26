@@ -10,7 +10,7 @@ Projets disponibles :
 
 | Projet | Questions | Thèmes | Source |
 |--------|-----------|--------|--------|
-| PiePHP | 200 | 21 (index.php, .htaccess, autoload, Core, Router, Controller, Request, Database, ORM, Entity, relations, moteur de templates, models, controllers, vues, SQL, sécurité, tests & CI, syntaxe PHP...) | [Claude_Test](https://github.com/VincentLesniak/Claude_Test) |
+| PiePHP | 252 | 26 (le sujet, chaque fichier du Core et de src/, HTTP et sessions, routes dynamiques, sécurité, « trouve le bug », « que se passe-t-il si… », comparaison avec Laravel et Symfony, tests & CI, syntaxe PHP...) | [Claude_Test](https://github.com/VincentLesniak/Claude_Test) et le sujet |
 
 ## La stack
 
@@ -30,7 +30,7 @@ ReviseTonProjet/
 ├── js/app.js                   La logique du quiz
 ├── data/
 │   ├── projects.json           La liste des projets à réviser
-│   └── piephp.json             Les 200 questions de PiePHP
+│   └── piephp.json             Les 252 questions de PiePHP
 ├── scripts/
 │   └── validate-questions.mjs  Vérifie les fichiers de questions
 └── .github/workflows/
@@ -97,6 +97,22 @@ Le quiz ne connaît aucun projet à l'avance : tout est dans `data/`.
    ```
 
 3. Lance `node scripts/validate-questions.mjs`, puis ouvre une pull request.
+
+### Écrire de bonnes questions
+
+- **Des longueurs comparables.** Si la bonne réponse est toujours la plus
+  longue (ou la plus précise), on la devine sans connaître le cours. Le
+  script refuse un projet où elle est la plus longue dans plus de 35 % des
+  questions, ou toujours au même rang de longueur (plus de 40 %). Mets les
+  détails dans `explanation`, pas dans la réponse.
+- **Des pièges crédibles.** Une mauvaise réponse doit être une vraie
+  confusion (302 au lieu de 303, `self::` au lieu de `static::`,
+  `include` au lieu de `require_once`), jamais une réponse absurde.
+- **Ce que le jury demande, pas du par cœur.** Préfère « pourquoi ? »,
+  « que se passe-t-il si… ? », « trouve le bug » au nom exact d'une
+  constante ou d'une regex.
+- **Vrai quelle que soit la configuration.** Évite les questions dont la
+  réponse dépend d'un réglage de `php.ini` (comme `output_buffering`).
 
 Astuce : `https://<site>/#monprojet` ouvre directement le quiz sur ce projet.
 

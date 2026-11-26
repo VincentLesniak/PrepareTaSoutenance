@@ -5,6 +5,11 @@
 
 import { readFileSync, existsSync } from 'node:fs';
 
+// Règles anti-biais (voir plus bas), appliquées à partir de 40 questions.
+const MIN_QUESTIONS_FOR_BIAS = 40;
+const MAX_LONGEST_PERCENT = 35;
+const MAX_RANK_PERCENT = 40;
+
 const errors = [];
 const fail = (where, message) => errors.push(`${where} : ${message}`);
 const isText = (value) => typeof value === 'string' && value.trim() !== '';
@@ -74,6 +79,36 @@ for (const meta of projects) {
         if (!isText(q.explanation)) fail(at, 'explication manquante');
     }
     if (ids.size === 0) fail(file, 'aucune question');
+
+    // Biais de longueur : si la bonne réponse est trop souvent la plus
+    // longue (ou toujours au même rang de longueur), on peut la deviner
+    // sans connaître le cours. Au hasard, chaque rang tombe 1 fois sur 4.
+    const valid = (data.questions ?? []).filter((q) => Array.isArray(q.choices) && q.choices.length === 4
+        && Number.isInteger(q.answer) && q.answer >= 0 && q.answer <= 3 && q.choices.every(isText));
+    if (valid.length >= MIN_QUESTIONS_FOR_BIAS) {
+        const ranks = [0, 0, 0, 0];
+        let longest = 0;
+        for (const q of valid) {
+            const lengths = q.choices.map((choice) => choice.length);
+            const good = lengths[q.answer];
+            const sorted = [...lengths].sort((a, b) => a - b);
+            ranks[sorted.indexOf(good)]++;
+            if (good === sorted[3] && sorted[3] > sorted[2]) longest++;
+        }
+        const percent = (n) => Math.round((n / valid.length) * 100);
+        if (percent(longest) > MAX_LONGEST_PERCENT) {
+            fail(file, `la bonne réponse est la plus longue dans ${percent(longest)} % des questions `
+                + `(maximum ${MAX_LONGEST_PERCENT} %) : raccourcis-la ou allonge les pièges`);
+        }
+        ranks.forEach((count, rank) => {
+            if (percent(count) > MAX_RANK_PERCENT) {
+                fail(file, `la bonne réponse a le rang de longueur ${rank + 1}/4 dans ${percent(count)} % `
+                    + `des questions (maximum ${MAX_RANK_PERCENT} %)`);
+            }
+        });
+        console.log(`  longueur de la bonne réponse, de la plus courte à la plus longue : `
+            + ranks.map((count) => `${percent(count)} %`).join(' / '));
+    }
     total += ids.size;
     console.log(`${meta.title} : ${ids.size} questions, ${categories.size} thèmes`);
 }

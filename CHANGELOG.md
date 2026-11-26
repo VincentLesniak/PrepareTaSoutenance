@@ -9,6 +9,25 @@ les numéros de version suivent le [versionnage sémantique](https://semver.org/
 
 ## [Non publié]
 
+## [0.1.1]
+
+### Ajouté
+- Environ 70 nouvelles questions PiePHP : le sujet (étapes, schéma MVC, relations,
+  My cinema), HTTP et sessions, routes dynamiques, « trouve le bug »,
+  « que se passe-t-il si… », comparaison avec Laravel et Symfony (Eloquent,
+  Blade, middleware, migrations, CSRF, PSR-4, Active Record).
+- `validate-questions.mjs` refuse un projet où la bonne réponse est trop
+  souvent la plus longue, ou toujours au même rang de longueur.
+- README : règles pour écrire de bonnes questions.
+
+### Modifié
+- Toutes les réponses réécrites : longueurs équilibrées (la bonne réponse
+  est la plus longue dans 24 % des cas au lieu de 86 %) et pièges crédibles.
+
+### Supprimé
+- Une vingtaine de questions « par cœur » ou dépendantes de la configuration (nom md5 du
+  cache, regex exacte de checkName(), sprintf %2$s, double_encode...).
+
 ## [0.1.0]
 
 ### Ajouté
