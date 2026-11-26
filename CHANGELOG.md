@@ -12,7 +12,7 @@ les numéros de version suivent le [versionnage sémantique](https://semver.org/
 ## [0.2.0]
 
 ### Ajouté
-- Formulaire de contact qui envoie un mail à lesniak.vincent@epitech.eu via
+- Formulaire de contact qui envoie un mail à l'auteur via
   FormSubmit (réglé dans `data/site.json`) : bouton « Écris-moi » dans le
   pied de page et lien « Signaler une erreur sur cette question » après
   chaque réponse, qui joint l'identifiant et le texte de la question.

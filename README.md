@@ -120,8 +120,7 @@ Astuce : `https://<site>/#monprojet` ouvre directement le quiz sur ce projet.
 ## Formulaire de contact
 
 Le bouton « Écris-moi » du pied de page et le lien « Signaler une erreur sur
-cette question » ouvrent un formulaire qui envoie un mail à
-lesniak.vincent@epitech.eu.
+cette question » ouvrent un formulaire qui envoie un mail à l'auteur.
 
 GitHub Pages ne peut pas envoyer de mail : le formulaire passe par
 [FormSubmit](https://formsubmit.co), un service gratuit et sans compte qui
@@ -133,19 +132,30 @@ Tout se règle dans `data/site.json` :
 ```json
 {
   "contact": {
-    "endpoint": "https://formsubmit.co/ajax/lesniak.vincent@epitech.eu",
+    "endpoint": "https://formsubmit.co/ajax/<alias>",
     "fallbackUrl": "https://github.com/VincentLesniak",
     "rateLimit": { "minSecondsBetweenMessages": 120, "maxMessagesPerDay": 5 }
   }
 }
 ```
 
-**Activation, une seule fois.** Au premier message envoyé depuis le site,
-FormSubmit envoie un mail « Activate Form » à l'adresse de réception : il
-faut cliquer sur le lien. Ce mail contient aussi un alias aléatoire ; on peut
-alors remplacer l'adresse dans `endpoint` par
-`https://formsubmit.co/ajax/<alias>` pour qu'elle ne soit plus lisible dans
-le code.
+**Ne jamais mettre l'adresse mail en clair dans `endpoint`** : le dépôt et le
+site sont publics, elle serait lisible par tous, robots compris. On utilise
+l'alias aléatoire que FormSubmit fournit à l'activation :
+
+1. Depuis un terminal, envoie un premier message à FormSubmit avec ton
+   adresse (une seule fois, hors du dépôt) :
+
+   ```bash
+   curl -X POST https://formsubmit.co/ajax/ton.adresse@exemple.fr -d message=activation
+   ```
+
+2. Ouvre le mail « Activate Form » reçu, clique sur le lien d'activation et
+   note l'alias aléatoire qu'il indique.
+3. Mets `https://formsubmit.co/ajax/<alias>` dans `endpoint`.
+
+Tant que `endpoint` est vide, le formulaire s'affiche mais indique que l'envoi
+n'est pas configuré et renvoie vers `fallbackUrl`.
 
 **Limite d'envoi.** Le navigateur accepte au plus un message toutes les
 2 minutes et 5 messages sur 24 heures. Cette limite arrête les envois en
