@@ -60,6 +60,7 @@
             <div id="feedback" class="feedback" hidden>
                 <p id="feedback-verdict" class="verdict"></p>
                 <p id="feedback-explanation"></p>
+                <button type="button" class="link-button report" id="report-button">Signaler une erreur sur cette question</button>
             </div>
 
             <div class="actions">
@@ -87,12 +88,47 @@
 
     <footer class="footer muted">
         <p>
-            Questions écrites à partir du code des projets. Une erreur dans une question ?
-            Signale-la sur
-            <a class="author" href="https://github.com/VincentLesniak" rel="author">
-                <svg class="icon" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
-                VincentLesniak</a>.
+            Questions écrites à partir du code des projets. Une erreur dans une question, une idée ?
+            <button type="button" class="link-button" id="contact-open">Écris-moi</button>
         </p>
     </footer>
+
+    <!-- Formulaire de contact : envoyé par mail via FormSubmit (adresse et limites dans data/site.json) -->
+    <dialog id="contact-dialog" class="dialog" aria-labelledby="contact-title">
+        <form id="contact-form" class="contact-form" novalidate>
+            <div class="dialog-head">
+                <h2 id="contact-title">Signaler une erreur ou proposer une idée</h2>
+                <button type="button" class="ghost close" id="contact-close" aria-label="Fermer">✕</button>
+            </div>
+
+            <p id="contact-question-info" class="pill-block muted" hidden></p>
+            <input type="hidden" name="question" id="contact-question">
+
+            <label for="contact-subject">Sujet</label>
+            <select id="contact-subject" name="sujet">
+                <option>Erreur dans une question</option>
+                <option>Idée de question ou de projet</option>
+                <option>Problème sur le site</option>
+                <option>Autre</option>
+            </select>
+
+            <label for="contact-message">Message</label>
+            <textarea id="contact-message" name="message" rows="5" required maxlength="3000"
+                placeholder="Explique ce qui ne va pas, ou ce que tu proposes."></textarea>
+
+            <!-- Piège à robots : un humain ne voit pas ce champ et le laisse vide. -->
+            <div class="honeypot" aria-hidden="true">
+                <label for="contact-website">Ne pas remplir</label>
+                <input type="text" id="contact-website" name="_honey" tabindex="-1" autocomplete="off">
+            </div>
+
+            <p id="contact-status" class="status" role="status" hidden></p>
+
+            <div class="actions">
+                <button type="button" class="ghost" id="contact-cancel">Annuler</button>
+                <button type="submit" class="primary" id="contact-submit">Envoyer</button>
+            </div>
+        </form>
+    </dialog>
 </body>
 </html>

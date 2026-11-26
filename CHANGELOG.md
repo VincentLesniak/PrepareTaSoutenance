@@ -9,10 +9,24 @@ les numéros de version suivent le [versionnage sémantique](https://semver.org/
 
 ## [Non publié]
 
+## [0.2.0]
+
+### Ajouté
+- Formulaire de contact qui envoie un mail à l'auteur via
+  FormSubmit (réglé dans `data/site.json`) : bouton « Écris-moi » dans le
+  pied de page et lien « Signaler une erreur sur cette question » après
+  chaque réponse, qui joint l'identifiant et le texte de la question.
+- Limite d'envoi dans le navigateur : un message toutes les 2 minutes et
+  5 messages par jour au plus, plus un champ piège contre les robots.
+
 ### Modifié
-- Le projet s'appelle désormais PrepareTaSoutenance (titre, en-tête, README).
-  Nouvelle adresse du site : https://vincentlesniak.github.io/PrepareTaSoutenance/.
-- Pied de page : lien vers le GitHub de l'auteur au lieu de la consigne de pull request.
+- Le pied de page propose le formulaire au lieu du lien GitHub.
+- Les meilleurs scores sont rangés sous `pts-best:` au lieu de `rtp-best:`
+  (ancien nom du projet) ; les scores déjà enregistrés sont repris.
+- Les raccourcis clavier du quiz sont désactivés pendant la saisie d'un message.
+- Le projet s'appelle désormais PrepareTaSoutenance (titre, en-tête, slogan,
+  README). Nouvelle adresse du site :
+  https://vincentlesniak.github.io/PrepareTaSoutenance/.
 
 ## [0.1.1]
 

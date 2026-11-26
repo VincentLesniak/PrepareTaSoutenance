@@ -3,7 +3,8 @@
  *
  * Données :
  *   data/projects.json      la liste des projets (id, titre, fichier) ;
- *   data/<projet>.json      les catégories et les questions d'un projet.
+ *   data/<projet>.json      les catégories et les questions d'un projet ;
+ *   data/site.json          les réglages du site (adresse du formulaire de contact).
  * Ajouter un projet = ajouter son fichier JSON et une ligne dans
  * projects.json, sans toucher à ce code.
  *
@@ -23,6 +24,9 @@
         score: 0,
         answered: false,
         mistakes: [],
+        contactEndpoint: '',
+        contactFallback: '',
+        rateLimit: { minSecondsBetweenMessages: 120, maxMessagesPerDay: 5 },
     };
 
     const $ = (id) => document.getElementById(id);
@@ -68,6 +72,8 @@
     // ------------------------------------------------------------------ accueil
 
     async function init() {
+        migrateOldScores();
+        loadSiteSettings();
         try {
             const data = await fetchJson('data/projects.json');
             state.projects = data.projects;
@@ -127,7 +133,25 @@
     }
 
     function bestScoreKey() {
-        return `rtp-best:${state.project.id}:${$('category-select').value}`;
+        return `pts-best:${state.project.id}:${$('category-select').value}`;
+    }
+
+    // Avant la 0.2.0, les scores étaient rangés sous « rtp-best:… » (ancien nom
+    // du projet). On les recopie une fois sous la nouvelle clé.
+    function migrateOldScores() {
+        try {
+            const storage = window.localStorage;
+            for (let i = storage.length - 1; i >= 0; i--) {
+                const oldKey = storage.key(i);
+                if (oldKey && oldKey.startsWith('rtp-best:')) {
+                    const newKey = 'pts-best:' + oldKey.slice('rtp-best:'.length);
+                    if (storage.getItem(newKey) === null) {
+                        storage.setItem(newKey, storage.getItem(oldKey));
+                    }
+                    storage.removeItem(oldKey);
+                }
+            }
+        } catch (e) { /* stockage indisponible : rien à migrer */ }
     }
 
     function updateBestScore() {
@@ -292,6 +316,165 @@
         show('result');
     }
 
+    // ------------------------------------------------------------------ contact
+
+    // Le site est statique : il ne peut pas envoyer de mail lui-même. Le
+    // formulaire est envoyé à FormSubmit, qui transfère le message par mail.
+    // L'adresse et les limites d'envoi sont dans data/site.json.
+    async function loadSiteSettings() {
+        try {
+            const site = await fetchJson('data/site.json');
+            const contact = site.contact || {};
+            state.contactEndpoint = contact.endpoint || '';
+            state.contactFallback = contact.fallbackUrl || '';
+            Object.assign(state.rateLimit, contact.rateLimit || {});
+        } catch (e) { /* pas de réglages : le formulaire affichera une solution de repli */ }
+    }
+
+    // Limite d'envoi, dans le navigateur : au plus un message toutes les
+    // N secondes et M messages sur 24 heures. Elle évite les envois en rafale
+    // depuis le site, mais ne remplace pas une protection côté serveur (on
+    // peut la contourner en vidant le stockage du navigateur).
+    const SENT_KEY = 'pts-contact-sent';
+    const DAY_MS = 24 * 60 * 60 * 1000;
+
+    function recentSends(now) {
+        let list = [];
+        try { list = JSON.parse(storageGet(SENT_KEY) || '[]'); } catch (e) { list = []; }
+        return Array.isArray(list) ? list.filter((t) => Number.isFinite(t) && now - t < DAY_MS && t <= now) : [];
+    }
+
+    function formatWait(ms) {
+        const minutes = Math.ceil(ms / 60000);
+        if (minutes < 60) {
+            return `${minutes} minute${minutes > 1 ? 's' : ''}`;
+        }
+        const hours = Math.ceil(minutes / 60);
+        return `${hours} heure${hours > 1 ? 's' : ''}`;
+    }
+
+    // Renvoie un message d'attente si l'envoi est bloqué, sinon null.
+    function rateLimitMessage(now) {
+        const sends = recentSends(now);
+        const { minSecondsBetweenMessages, maxMessagesPerDay } = state.rateLimit;
+        if (sends.length >= maxMessagesPerDay) {
+            const wait = Math.min(...sends) + DAY_MS - now;
+            return `Tu as déjà envoyé ${maxMessagesPerDay} messages aujourd'hui. Réessaie dans ${formatWait(wait)}.`;
+        }
+        const last = sends.length ? Math.max(...sends) : 0;
+        const wait = last + minSecondsBetweenMessages * 1000 - now;
+        if (wait > 0) {
+            return `Un message vient de partir. Attends ${formatWait(wait)} avant d'en envoyer un autre.`;
+        }
+        return null;
+    }
+
+    function rememberSend(now) {
+        const sends = recentSends(now);
+        sends.push(now);
+        storageSet(SENT_KEY, JSON.stringify(sends));
+    }
+
+    function setContactStatus(kind, message) {
+        const el = $('contact-status');
+        el.className = 'status ' + kind;
+        el.textContent = message;
+        el.hidden = !message;
+    }
+
+    function openContact(question) {
+        const form = $('contact-form');
+        form.reset();
+        setContactStatus('', '');
+        $('contact-submit').disabled = false;
+        $('contact-submit').hidden = false;
+        $('contact-cancel').textContent = 'Annuler';
+        const limited = rateLimitMessage(Date.now());
+        if (limited) {
+            setContactStatus('bad', limited);
+        }
+
+        const info = $('contact-question-info');
+        if (question) {
+            const label = `${state.project.title} · ${question.id} : ${question.question}`;
+            $('contact-question').value = label;
+            info.textContent = `Question concernée : ${label}`;
+            $('contact-subject').value = 'Erreur dans une question';
+        } else {
+            $('contact-question').value = '';
+            info.textContent = '';
+        }
+        info.hidden = !question;
+
+        const dialog = $('contact-dialog');
+        if (typeof dialog.showModal === 'function') {
+            dialog.showModal();
+        } else {
+            dialog.setAttribute('open', '');
+        }
+        $('contact-message').focus();
+    }
+
+    function closeContact() {
+        const dialog = $('contact-dialog');
+        if (typeof dialog.close === 'function') {
+            dialog.close();
+        } else {
+            dialog.removeAttribute('open');
+        }
+    }
+
+    async function sendContact(event) {
+        event.preventDefault();
+        const form = $('contact-form');
+        const message = $('contact-message');
+        if (!message.value.trim()) {
+            setContactStatus('bad', 'Écris ton message avant d\'envoyer.');
+            message.focus();
+            return;
+        }
+        if (!state.contactEndpoint) {
+            setContactStatus('bad', 'L\'envoi n\'est pas encore configuré. '
+                + (state.contactFallback ? `Écris-moi sur ${state.contactFallback}` : ''));
+            return;
+        }
+
+        const limited = rateLimitMessage(Date.now());
+        if (limited) {
+            setContactStatus('bad', limited);
+            return;
+        }
+
+        const data = new FormData(form);
+        data.append('_subject', `[PrepareTaSoutenance] ${data.get('sujet')}`);
+        data.append('_template', 'table');
+        data.append('_captcha', 'false');
+        data.append('page', window.location.href);
+
+        const submit = $('contact-submit');
+        submit.disabled = true;
+        setContactStatus('', 'Envoi en cours…');
+        try {
+            const response = await fetch(state.contactEndpoint, {
+                method: 'POST',
+                body: data,
+                headers: { Accept: 'application/json' },
+            });
+            const result = await response.json().catch(() => ({}));
+            // FormSubmit répond { success: "true" } (une chaîne) quand le mail part.
+            if (!response.ok || String(result.success) !== 'true') {
+                throw new Error(result.message || `HTTP ${response.status}`);
+            }
+            rememberSend(Date.now());
+            setContactStatus('good', 'Merci, ton message est envoyé !');
+            submit.hidden = true;
+            $('contact-cancel').textContent = 'Fermer';
+        } catch (e) {
+            submit.disabled = false;
+            setContactStatus('bad', 'L\'envoi a échoué. Vérifie ta connexion et réessaie dans un moment.');
+        }
+    }
+
     // ------------------------------------------------------------------ événements
 
     $('setup-form').addEventListener('submit', startFromSettings);
@@ -299,9 +482,16 @@
     $('quit-button').addEventListener('click', () => { updateBestScore(); show('home'); });
     $('restart-button').addEventListener('click', () => { updateBestScore(); show('home'); });
     $('retry-wrong-button').addEventListener('click', () => startQuiz(shuffle(state.mistakes)));
+    $('contact-open').addEventListener('click', () => openContact(null));
+    $('report-button').addEventListener('click', () => openContact(state.queue[state.index]));
+    $('contact-close').addEventListener('click', closeContact);
+    $('contact-cancel').addEventListener('click', closeContact);
+    $('contact-form').addEventListener('submit', sendContact);
 
     document.addEventListener('keydown', (event) => {
-        if (screens.quiz.hidden || event.altKey || event.ctrlKey || event.metaKey) {
+        // Pas de raccourci pendant qu'on écrit dans le formulaire de contact.
+        if (screens.quiz.hidden || $('contact-dialog').open
+            || event.altKey || event.ctrlKey || event.metaKey) {
             return;
         }
         const position = LETTERS.indexOf(event.key);
@@ -310,7 +500,9 @@
             if (button) {
                 button.click();
             }
-        } else if (event.key === 'Enter' && state.answered && document.activeElement !== $('next-button')) {
+        } else if (event.key === 'Enter' && state.answered
+            && !(document.activeElement && document.activeElement.tagName === 'BUTTON')) {
+            // Un bouton qui a le focus gère déjà Entrée lui-même (Suivante, Signaler…).
             nextQuestion();
         }
     });
