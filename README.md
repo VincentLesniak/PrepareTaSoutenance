@@ -120,30 +120,40 @@ Astuce : `https://<site>/#monprojet` ouvre directement le quiz sur ce projet.
 ## Formulaire de contact
 
 Le bouton « Écris-moi » du pied de page et le lien « Signaler une erreur sur
-cette question » ouvrent un formulaire. GitHub Pages ne peut pas envoyer de
-mail : le formulaire est envoyé à [Formspree](https://formspree.io), un
-service gratuit (50 messages par mois) qui transfère chaque message par mail.
-L'adresse de réception reste chez Formspree, elle n'apparaît jamais dans le
-code du site.
+cette question » ouvrent un formulaire qui envoie un mail à
+lesniak.vincent@epitech.eu.
 
-Mise en place, une seule fois :
+GitHub Pages ne peut pas envoyer de mail : le formulaire passe par
+[FormSubmit](https://formsubmit.co), un service gratuit et sans compte qui
+transfère chaque message par mail. Le mail reçu contient le sujet, le
+message, l'e-mail de la personne (facultatif, utilisé pour « Répondre ») et,
+pour un signalement, l'identifiant et le texte de la question.
 
-1. Crée un compte sur https://formspree.io avec l'adresse qui doit recevoir
-   les messages, puis crée un formulaire (« New form »).
-2. Copie son adresse, de la forme `https://formspree.io/f/abcdwxyz`.
-3. Colle-la dans `data/site.json` :
+Tout se règle dans `data/site.json` :
 
-   ```json
-   { "contact": { "endpoint": "https://formspree.io/f/abcdwxyz", "fallbackUrl": "https://github.com/VincentLesniak" } }
-   ```
+```json
+{
+  "contact": {
+    "endpoint": "https://formsubmit.co/ajax/lesniak.vincent@epitech.eu",
+    "fallbackUrl": "https://github.com/VincentLesniak",
+    "rateLimit": { "minSecondsBetweenMessages": 120, "maxMessagesPerDay": 5 }
+  }
+}
+```
 
-4. Envoie un premier message depuis le site et confirme-le dans le mail de
-   Formspree.
+**Activation, une seule fois.** Au premier message envoyé depuis le site,
+FormSubmit envoie un mail « Activate Form » à l'adresse de réception : il
+faut cliquer sur le lien. Ce mail contient aussi un alias aléatoire ; on peut
+alors remplacer l'adresse dans `endpoint` par
+`https://formsubmit.co/ajax/<alias>` pour qu'elle ne soit plus lisible dans
+le code.
 
-Tant que `endpoint` est vide, le formulaire s'affiche mais indique que l'envoi
-n'est pas configuré et renvoie vers `fallbackUrl`. Le mail reçu contient le
-sujet, le message, l'e-mail de la personne (facultatif) et, pour un
-signalement, l'identifiant et le texte de la question.
+**Limite d'envoi.** Le navigateur accepte au plus un message toutes les
+2 minutes et 5 messages sur 24 heures. Cette limite arrête les envois en
+rafale depuis le site, mais elle est contournable (vider le stockage du
+navigateur, envoyer sans passer par le site) : GitHub Pages ne peut pas en
+faire une côté serveur. Un champ caché (`_honey`) écarte en plus les robots
+qui remplissent tous les champs, et FormSubmit a son propre filtre anti-spam.
 
 ## Déploiement sur GitHub Pages
 

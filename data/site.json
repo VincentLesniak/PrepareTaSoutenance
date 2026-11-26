@@ -1,6 +1,10 @@
 {
   "contact": {
-    "endpoint": "",
-    "fallbackUrl": "https://github.com/VincentLesniak"
+    "endpoint": "https://formsubmit.co/ajax/lesniak.vincent@epitech.eu",
+    "fallbackUrl": "https://github.com/VincentLesniak",
+    "rateLimit": {
+      "minSecondsBetweenMessages": 120,
+      "maxMessagesPerDay": 5
+    }
   }
 }

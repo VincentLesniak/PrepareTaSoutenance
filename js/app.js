@@ -26,6 +26,7 @@
         mistakes: [],
         contactEndpoint: '',
         contactFallback: '',
+        rateLimit: { minSecondsBetweenMessages: 120, maxMessagesPerDay: 5 },
     };
 
     const $ = (id) => document.getElementById(id);
@@ -318,14 +319,60 @@
     // ------------------------------------------------------------------ contact
 
     // Le site est statique : il ne peut pas envoyer de mail lui-même. Le
-    // formulaire est envoyé à un service externe (Formspree, par exemple)
-    // qui transfère le message par mail. Son adresse est dans data/site.json.
+    // formulaire est envoyé à FormSubmit, qui transfère le message par mail.
+    // L'adresse et les limites d'envoi sont dans data/site.json.
     async function loadSiteSettings() {
         try {
             const site = await fetchJson('data/site.json');
-            state.contactEndpoint = (site.contact && site.contact.endpoint) || '';
-            state.contactFallback = (site.contact && site.contact.fallbackUrl) || '';
+            const contact = site.contact || {};
+            state.contactEndpoint = contact.endpoint || '';
+            state.contactFallback = contact.fallbackUrl || '';
+            Object.assign(state.rateLimit, contact.rateLimit || {});
         } catch (e) { /* pas de réglages : le formulaire affichera une solution de repli */ }
+    }
+
+    // Limite d'envoi, dans le navigateur : au plus un message toutes les
+    // N secondes et M messages sur 24 heures. Elle évite les envois en rafale
+    // depuis le site, mais ne remplace pas une protection côté serveur (on
+    // peut la contourner en vidant le stockage du navigateur).
+    const SENT_KEY = 'pts-contact-sent';
+    const DAY_MS = 24 * 60 * 60 * 1000;
+
+    function recentSends(now) {
+        let list = [];
+        try { list = JSON.parse(storageGet(SENT_KEY) || '[]'); } catch (e) { list = []; }
+        return Array.isArray(list) ? list.filter((t) => Number.isFinite(t) && now - t < DAY_MS && t <= now) : [];
+    }
+
+    function formatWait(ms) {
+        const minutes = Math.ceil(ms / 60000);
+        if (minutes < 60) {
+            return `${minutes} minute${minutes > 1 ? 's' : ''}`;
+        }
+        const hours = Math.ceil(minutes / 60);
+        return `${hours} heure${hours > 1 ? 's' : ''}`;
+    }
+
+    // Renvoie un message d'attente si l'envoi est bloqué, sinon null.
+    function rateLimitMessage(now) {
+        const sends = recentSends(now);
+        const { minSecondsBetweenMessages, maxMessagesPerDay } = state.rateLimit;
+        if (sends.length >= maxMessagesPerDay) {
+            const wait = Math.min(...sends) + DAY_MS - now;
+            return `Tu as déjà envoyé ${maxMessagesPerDay} messages aujourd'hui. Réessaie dans ${formatWait(wait)}.`;
+        }
+        const last = sends.length ? Math.max(...sends) : 0;
+        const wait = last + minSecondsBetweenMessages * 1000 - now;
+        if (wait > 0) {
+            return `Un message vient de partir. Attends ${formatWait(wait)} avant d'en envoyer un autre.`;
+        }
+        return null;
+    }
+
+    function rememberSend(now) {
+        const sends = recentSends(now);
+        sends.push(now);
+        storageSet(SENT_KEY, JSON.stringify(sends));
     }
 
     function setContactStatus(kind, message) {
@@ -342,6 +389,10 @@
         $('contact-submit').disabled = false;
         $('contact-submit').hidden = false;
         $('contact-cancel').textContent = 'Annuler';
+        const limited = rateLimitMessage(Date.now());
+        if (limited) {
+            setContactStatus('bad', limited);
+        }
 
         const info = $('contact-question-info');
         if (question) {
@@ -394,12 +445,17 @@
             return;
         }
 
+        const limited = rateLimitMessage(Date.now());
+        if (limited) {
+            setContactStatus('bad', limited);
+            return;
+        }
+
         const data = new FormData(form);
         data.append('_subject', `[PrepareTaSoutenance] ${data.get('sujet')}`);
+        data.append('_template', 'table');
+        data.append('_captcha', 'false');
         data.append('page', window.location.href);
-        if (data.get('email')) {
-            data.append('_replyto', data.get('email'));
-        }
 
         const submit = $('contact-submit');
         submit.disabled = true;
@@ -410,15 +466,18 @@
                 body: data,
                 headers: { Accept: 'application/json' },
             });
-            if (!response.ok) {
-                throw new Error(`HTTP ${response.status}`);
+            const result = await response.json().catch(() => ({}));
+            // FormSubmit répond { success: "true" } (une chaîne) quand le mail part.
+            if (!response.ok || String(result.success) !== 'true') {
+                throw new Error(result.message || `HTTP ${response.status}`);
             }
+            rememberSend(Date.now());
             setContactStatus('good', 'Merci, ton message est envoyé !');
             submit.hidden = true;
             $('contact-cancel').textContent = 'Fermer';
         } catch (e) {
             submit.disabled = false;
-            setContactStatus('bad', 'L\'envoi a échoué. Vérifie ta connexion et réessaie.');
+            setContactStatus('bad', 'L\'envoi a échoué. Vérifie ta connexion et réessaie dans un moment.');
         }
     }
 

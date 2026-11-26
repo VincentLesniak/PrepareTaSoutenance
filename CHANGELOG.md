@@ -12,10 +12,12 @@ les numéros de version suivent le [versionnage sémantique](https://semver.org/
 ## [0.2.0]
 
 ### Ajouté
-- Formulaire de contact envoyé par mail (via Formspree, réglé dans
-  `data/site.json`) : bouton « Écris-moi » dans le pied de page et lien
-  « Signaler une erreur sur cette question » après chaque réponse, qui joint
-  l'identifiant et le texte de la question au message.
+- Formulaire de contact qui envoie un mail à lesniak.vincent@epitech.eu via
+  FormSubmit (réglé dans `data/site.json`) : bouton « Écris-moi » dans le
+  pied de page et lien « Signaler une erreur sur cette question » après
+  chaque réponse, qui joint l'identifiant et le texte de la question.
+- Limite d'envoi dans le navigateur : un message toutes les 2 minutes et
+  5 messages par jour au plus, plus un champ piège contre les robots.
 
 ### Modifié
 - Le pied de page propose le formulaire au lieu du lien GitHub.
